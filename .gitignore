@@ -1,6 +1,9 @@
 # Private source corpus
 locked/
 
+# Teacher-only solutions
+results/
+
 # Jupyter
 .ipynb_checkpoints/
 
