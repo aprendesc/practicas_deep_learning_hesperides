@@ -13,6 +13,7 @@ def code(source):
 
 def save(name, cells):
     OUT.mkdir(exist_ok=True)
+    (OUT / "imagenes").mkdir(exist_ok=True)
     notebook = {
         "cells": cells,
         "metadata": {
@@ -180,6 +181,8 @@ save("02_matematicas_y_autograd.ipynb", [
     print("x final:", round(x.item(), 4))
     plt.plot(historia, marker="o")
     plt.xlabel("paso"); plt.ylabel("pérdida"); plt.yscale("log"); plt.grid(alpha=.3);
+    plt.savefig("imagenes/descenso_gradiente.png", dpi=160, bbox_inches="tight")
+    plt.show()
     """),
     md("""
     ## Preguntas
@@ -210,6 +213,8 @@ save("03_regresion_lineal.ipynb", [
 
     plt.scatter(X[:150, 1], y[:150], s=12, alpha=.6)
     plt.xlabel("segunda característica"); plt.ylabel("objetivo"); plt.grid(alpha=.2);
+    plt.savefig("imagenes/datos_regresion.png", dpi=160, bbox_inches="tight")
+    plt.show()
     """),
     md("""
     ## Modelo y pérdida
@@ -252,6 +257,8 @@ save("03_regresion_lineal.ipynb", [
     print("b aprendido:", round(b.item(), 3), "· real:", b_real)
     plt.plot(range(1, epocas + 1), historia, marker="o")
     plt.xlabel("época"); plt.ylabel("MSE"); plt.yscale("log"); plt.grid(alpha=.3);
+    plt.savefig("imagenes/perdida_regresion.png", dpi=160, bbox_inches="tight")
+    plt.show()
     """),
     md("""
     ## Práctica y diagnóstico
@@ -282,6 +289,8 @@ save("04_clasificacion_y_perceptron.ipynb", [
     y = torch.cat([torch.zeros(n), torch.ones(n)])
     plt.scatter(X[:, 0], X[:, 1], c=y, cmap="coolwarm", edgecolor="white", s=35)
     plt.xlabel("x₁"); plt.ylabel("x₂"); plt.grid(alpha=.2);
+    plt.savefig("imagenes/datos_clasificacion.png", dpi=160, bbox_inches="tight")
+    plt.show()
     """),
     md("""
     ## Regla de aprendizaje
@@ -318,6 +327,8 @@ save("04_clasificacion_y_perceptron.ipynb", [
     ys = -(w[0] * xs + b) / w[1]
     plt.plot(xs, ys, "k--", label="frontera")
     plt.xlabel("x₁"); plt.ylabel("x₂"); plt.legend(); plt.grid(alpha=.2);
+    plt.savefig("imagenes/frontera_perceptron.png", dpi=160, bbox_inches="tight")
+    plt.show()
     """),
     md("""
     ## El límite del perceptrón: XOR
@@ -329,6 +340,8 @@ save("04_clasificacion_y_perceptron.ipynb", [
     y_xor = torch.tensor([0., 1., 1., 0.])
     plt.scatter(X_xor[:, 0], X_xor[:, 1], c=y_xor, cmap="coolwarm", s=120, edgecolor="black")
     plt.xticks([0, 1]); plt.yticks([0, 1]); plt.grid(alpha=.2);
+    plt.savefig("imagenes/problema_xor.png", dpi=160, bbox_inches="tight")
+    plt.show()
     """),
     md("""
     ## Preguntas
@@ -362,6 +375,8 @@ save("05_redes_y_backpropagation.ipynb", [
     ax[1].plot(z, torch.sigmoid(z)); ax[1].set_title("Sigmoid")
     for a in ax:
         a.grid(alpha=.3); a.axhline(0, color="black", lw=.5); a.axvline(0, color="black", lw=.5)
+    fig.savefig("imagenes/funciones_activacion.png", dpi=160, bbox_inches="tight")
+    plt.show()
     """),
     md("""
     ## Propagación hacia delante y hacia atrás
@@ -433,6 +448,7 @@ save("06_perceptron_multicapa.ipynb", [
     y = y_base.repeat(100, 1)
     perm = torch.randperm(len(X))
     train, test = perm[:320], perm[320:]
+    print(f"observaciones: {len(X)} · entrenamiento: {len(train)} · prueba: {len(test)}")
     """),
     md("""
     ## Implementación explícita
@@ -466,6 +482,8 @@ save("06_perceptron_multicapa.ipynb", [
     print(f"pérdida final={historia[-1][1]:.4f} · exactitud test={exactitud:.3f}")
     plt.plot([e for e, _ in historia], [v for _, v in historia], marker="o")
     plt.xlabel("época"); plt.ylabel("entropía cruzada"); plt.grid(alpha=.3);
+    plt.savefig("imagenes/perdida_mlp.png", dpi=160, bbox_inches="tight")
+    plt.show()
     """),
     md("""
     ## Frontera de decisión
@@ -481,6 +499,8 @@ save("06_perceptron_multicapa.ipynb", [
     plt.colorbar(label="P(clase 1)")
     plt.scatter(X_base[:, 0], X_base[:, 1], c=y_base[:, 0], cmap="coolwarm", edgecolor="black", s=100)
     plt.xlabel("x₁"); plt.ylabel("x₂");
+    plt.savefig("imagenes/frontera_mlp.png", dpi=160, bbox_inches="tight")
+    plt.show()
     """),
     md("""
     ## La misma arquitectura con `torch.nn`
