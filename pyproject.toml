@@ -1,0 +1,14 @@
+[project]
+name = "practicas-deep-learning-hesperides"
+version = "0.1.0"
+description = "Prácticas de Deep Learning e Inteligencia Artificial"
+requires-python = ">=3.12,<3.13"
+dependencies = [
+    "ipykernel>=6.29,<7",
+    "matplotlib>=3.9,<4",
+    "nbconvert>=7.16,<8",
+    "torch>=2.6,<3",
+]
+
+[tool.uv]
+package = false
