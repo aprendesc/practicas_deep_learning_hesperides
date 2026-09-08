@@ -1,0 +1,240 @@
+[
+  {
+    "chapter": 1,
+    "source": "locked/chapter_preliminaries/ndarray.ipynb",
+    "title": "Datos y tensores",
+    "target": "capitulo_1/05_ndarray.ipynb",
+    "sha256": "c4fa923850ee7b7b9e2fa87ec80d2eb625eef9c4a757ef7d88b4a30b7fab98e6"
+  },
+  {
+    "chapter": 1,
+    "source": "locked/chapter_linear-classification/image-classification-dataset.ipynb",
+    "title": "Fashion-MNIST y lectura de datos",
+    "target": "capitulo_1/06_image_classification_dataset.ipynb",
+    "sha256": "afe4a31f03ddde9f9d810013eaacacb821cbf79c85fb4ef372adca40a2cb97d2"
+  },
+  {
+    "chapter": 1,
+    "source": "locked/chapter_multilayer-perceptrons/mlp.ipynb",
+    "title": "Representaciones y MLP",
+    "target": "capitulo_1/07_mlp.ipynb",
+    "sha256": "b6a1845b57614aaa8eef792ba997c086216599078912e6021427eaa930e179c3"
+  },
+  {
+    "chapter": 1,
+    "source": "locked/chapter_multilayer-perceptrons/mlp-implementation.ipynb",
+    "title": "Primer entrenamiento de un MLP",
+    "target": "capitulo_1/08_mlp_implementation.ipynb",
+    "sha256": "a36e3a21b9ca8cbba6ee7fa4a90d81e98e2c044e61ed3ebb933476f0ad83341e"
+  },
+  {
+    "chapter": 2,
+    "source": "locked/chapter_preliminaries/autograd.ipynb",
+    "title": "Diferenciación automática",
+    "target": "capitulo_2/01_autograd.ipynb",
+    "sha256": "dee873397ff94a30d887cbdeed0566a4bb9fb02f1e0e6df8c46529149a611db6"
+  },
+  {
+    "chapter": 2,
+    "source": "locked/chapter_multilayer-perceptrons/backprop.ipynb",
+    "title": "Grafo y regla de la cadena",
+    "target": "capitulo_2/02_backprop.ipynb",
+    "sha256": "2cea06fc6b8db9746895458b6d9d46c2d968f24e328397c80200426d1dbfb798"
+  },
+  {
+    "chapter": 2,
+    "source": "locked/chapter_linear-classification/softmax-regression.ipynb",
+    "title": "Softmax, entropía cruzada y pérdida probabilística",
+    "target": "capitulo_2/03_softmax_regression.ipynb",
+    "sha256": "b4b0cd82866169e9ea89c005f59302fcd81213dcf065fc54d839816ce17ee2f2"
+  },
+  {
+    "chapter": 2,
+    "source": "locked/chapter_optimization/gd.ipynb",
+    "title": "Descenso por gradiente",
+    "target": "capitulo_2/04_gd.ipynb",
+    "sha256": "bb7b392d5600d1fea377161480cf582b2b1cae4ecb2cec3014a7978d199ab98a"
+  },
+  {
+    "chapter": 2,
+    "source": "locked/chapter_optimization/minibatch-sgd.ipynb",
+    "title": "SGD por minibatches",
+    "target": "capitulo_2/05_minibatch_sgd.ipynb",
+    "sha256": "b5ead49b930b25608df6a3a56ee9915ff4ab75a4e8f09b332e2f9ff11612b915"
+  },
+  {
+    "chapter": 2,
+    "source": "locked/chapter_optimization/momentum.ipynb",
+    "title": "Momentum",
+    "target": "capitulo_2/06_momentum.ipynb",
+    "sha256": "e882481869a363f85a0b85daaf12e876d0ffa9a98d959947e8611272385ed950"
+  },
+  {
+    "chapter": 2,
+    "source": "locked/chapter_optimization/adam.ipynb",
+    "title": "Adam y comparación controlada con SGD",
+    "target": "capitulo_2/07_adam.ipynb",
+    "sha256": "fac61f1bea03cea0f8c5212e68e7bd72939e9904e39c2ba2d45a80b9cca6d4e1"
+  },
+  {
+    "chapter": 3,
+    "source": "locked/chapter_linear-regression/generalization.ipynb",
+    "title": "Generalización y protocolo experimental",
+    "target": "capitulo_3/01_generalization.ipynb",
+    "sha256": "d5ca6ecd02e430062f7242fcf6c3680c6b8fbb07170651e1e4f9a7298230b900"
+  },
+  {
+    "chapter": 3,
+    "source": "locked/chapter_linear-regression/weight-decay.ipynb",
+    "title": "Regularización de pesos",
+    "target": "capitulo_3/02_weight_decay.ipynb",
+    "sha256": "b0fdb1e1e02d806bd188996196219c89ccff4701357c66714d8a72370c46a430"
+  },
+  {
+    "chapter": 3,
+    "source": "locked/chapter_multilayer-perceptrons/dropout.ipynb",
+    "title": "Dropout",
+    "target": "capitulo_3/03_dropout.ipynb",
+    "sha256": "2fddb5b3c4c40c6ef0fc65387b8058c64cbaf443362d8dbfaa4e92ffac931ac9"
+  },
+  {
+    "chapter": 3,
+    "source": "locked/chapter_multilayer-perceptrons/numerical-stability-and-init.ipynb",
+    "title": "Inicialización y estabilidad",
+    "target": "capitulo_3/04_numerical_stability_and_init.ipynb",
+    "sha256": "e30eb5b623b4c40fb6a88de7bb52fd60fd23bf6b8f6d7681dc48c6ff8fceb84d"
+  },
+  {
+    "chapter": 3,
+    "source": "locked/chapter_convolutional-modern/batch-norm.ipynb",
+    "title": "Normalización",
+    "target": "capitulo_3/05_batch_norm.ipynb",
+    "sha256": "513ddfd451ca9b33827c01c6cd83d004aa6d9530fa2f7eb33c2305d7fde98a91"
+  },
+  {
+    "chapter": 3,
+    "source": "locked/chapter_computer-vision/image-augmentation.ipynb",
+    "title": "Aumento de datos",
+    "target": "capitulo_3/06_image_augmentation.ipynb",
+    "sha256": "2980eadb599d1d37479b84a98cdabd46d5eac790059114b8e16c7bd4420af2c5"
+  },
+  {
+    "chapter": 4,
+    "source": "locked/chapter_convolutional-neural-networks/conv-layer.ipynb",
+    "title": "Convolución",
+    "target": "capitulo_4/01_conv_layer.ipynb",
+    "sha256": "c640418391c7ac9f77c851af98c26181c763130107150e6c22e12434b2ac8094"
+  },
+  {
+    "chapter": 4,
+    "source": "locked/chapter_convolutional-neural-networks/padding-and-strides.ipynb",
+    "title": "Padding y stride",
+    "target": "capitulo_4/02_padding_and_strides.ipynb",
+    "sha256": "48c4b36e117b21e3a2ba85d9157ddf5038e9c15df00128ceb0b009f09f6ca84a"
+  },
+  {
+    "chapter": 4,
+    "source": "locked/chapter_convolutional-neural-networks/channels.ipynb",
+    "title": "Canales",
+    "target": "capitulo_4/03_channels.ipynb",
+    "sha256": "5796e4363ac513f415303ea9c4cc457f9a781e481a5a07641d9560e9db5012d8"
+  },
+  {
+    "chapter": 4,
+    "source": "locked/chapter_convolutional-neural-networks/pooling.ipynb",
+    "title": "Pooling",
+    "target": "capitulo_4/04_pooling.ipynb",
+    "sha256": "4fbd45001c2cd275a9af28de10c6eaacb10a14e7488545c92205d42914517f57"
+  },
+  {
+    "chapter": 4,
+    "source": "locked/chapter_convolutional-neural-networks/lenet.ipynb",
+    "title": "CNN completa",
+    "target": "capitulo_4/05_lenet.ipynb",
+    "sha256": "c94ea0ae1d0e0f7dd6b298fb96856aa0fab2aa3e5f3b0171fc0a4e677e9d6e72"
+  },
+  {
+    "chapter": 4,
+    "source": "locked/chapter_convolutional-modern/resnet.ipynb",
+    "title": "Conexiones residuales",
+    "target": "capitulo_4/06_resnet.ipynb",
+    "sha256": "4669a7187e3f1195b2cd66223ccded40c6ae59205cc2c4a3f5187daf57174026"
+  },
+  {
+    "chapter": 4,
+    "source": "locked/chapter_computer-vision/fine-tuning.ipynb",
+    "title": "Transferencia",
+    "target": "capitulo_4/07_fine_tuning.ipynb",
+    "sha256": "3fe5978df37a5923ea3e1d5d60fcc26e18ed46aa273dde4c38c95b8d9744d23e"
+  },
+  {
+    "chapter": 5,
+    "source": "locked/chapter_recurrent-neural-networks/sequence.ipynb",
+    "title": "Series y contexto",
+    "target": "capitulo_5/01_sequence.ipynb",
+    "sha256": "044214cb77c3df6fe53554e2c556303f9625d4586920200d88dd4ac973c1c4fa"
+  },
+  {
+    "chapter": 5,
+    "source": "locked/chapter_recurrent-neural-networks/rnn-concise.ipynb",
+    "title": "RNN",
+    "target": "capitulo_5/02_rnn_concise.ipynb",
+    "sha256": "9070437028c27bc8d6bb04a4b481fd67123ce1333223291acd911d1190467d27"
+  },
+  {
+    "chapter": 5,
+    "source": "locked/chapter_recurrent-neural-networks/bptt.ipynb",
+    "title": "Retropropagación temporal",
+    "target": "capitulo_5/03_bptt.ipynb",
+    "sha256": "5cf8c741c912e9fb5a4a943925f75ac27974d60e3d8e7d814f07744d5d5654db"
+  },
+  {
+    "chapter": 5,
+    "source": "locked/chapter_recurrent-modern/lstm.ipynb",
+    "title": "LSTM",
+    "target": "capitulo_5/04_lstm.ipynb",
+    "sha256": "740306d151dbf9fdfb336933cc2c185f377c38f2468daf2a5166b3126a37fd1a"
+  },
+  {
+    "chapter": 5,
+    "source": "locked/chapter_recurrent-modern/gru.ipynb",
+    "title": "GRU",
+    "target": "capitulo_5/05_gru.ipynb",
+    "sha256": "f6c16853c901a2f226acdda7118445780a7aec7831361b4d954e69f0b0b2bd87"
+  },
+  {
+    "chapter": 5,
+    "source": "locked/chapter_attention-mechanisms-and-transformers/queries-keys-values.ipynb",
+    "title": "Consultas, claves y valores",
+    "target": "capitulo_5/06_queries_keys_values.ipynb",
+    "sha256": "95235437154c520786ff68da6c441ba0fb873ca212c1990876318e65f712b614"
+  },
+  {
+    "chapter": 5,
+    "source": "locked/chapter_attention-mechanisms-and-transformers/attention-scoring-functions.ipynb",
+    "title": "Puntuaciones y máscaras",
+    "target": "capitulo_5/07_attention_scoring_functions.ipynb",
+    "sha256": "e0942684dbccef14624a07019d7ad4f95c6a0fe232042da2de82c24ffd5afa2b"
+  },
+  {
+    "chapter": 5,
+    "source": "locked/chapter_attention-mechanisms-and-transformers/multihead-attention.ipynb",
+    "title": "Atención multicabeza",
+    "target": "capitulo_5/08_multihead_attention.ipynb",
+    "sha256": "29d0f2c597d42800316fa7da8989ee4f63effd9f280733e07d6f4765c63fb2f1"
+  },
+  {
+    "chapter": 5,
+    "source": "locked/chapter_attention-mechanisms-and-transformers/self-attention-and-positional-encoding.ipynb",
+    "title": "Autoatención y posición",
+    "target": "capitulo_5/09_self_attention_and_positional_encoding.ipynb",
+    "sha256": "fc89412b25e755ef531af767158dc37b49b298e56fe6acafffef88f65737e41c"
+  },
+  {
+    "chapter": 5,
+    "source": "locked/chapter_attention-mechanisms-and-transformers/transformer.ipynb",
+    "title": "Transformer y mapas de atención",
+    "target": "capitulo_5/10_transformer.ipynb",
+    "sha256": "b8849ef39923a2856989494fe50031d437c53284d3e5eedeb3c336490a6e969b"
+  }
+]

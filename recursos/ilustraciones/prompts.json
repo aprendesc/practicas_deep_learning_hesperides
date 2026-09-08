@@ -1,0 +1,51 @@
+[
+  {
+    "chapter": 1,
+    "file": "recursos/ilustraciones/capitulo_1.png",
+    "tool": "ImageGen integrada",
+    "prompts": [
+      "Use case: scientific-educational. Create a very high quality landscape textbook illustration for a Spanish university Deep Learning laboratory, conceptual not empirical. White background, charcoal fine linework, restrained golden yellow and teal accents, generous whitespace, crisp beautiful typography. Show three clearly separated panels flowing left to right: a small grid image of a handwritten digit, intermediate feature maps showing edges and strokes, final class scores. Connect them with elegant arrows, and below show three successive layers of a small neural network. Exact Spanish labels only: 'Aprender representaciones', 'Píxeles', 'Patrones intermedios', 'Predicción', 'Capas sucesivas'. Make intermediate images genuinely different; no suggestion that all MLP features are interpretable. No logos, no watermarks, no numerical performance claims, no extra text. Premium scientific editorial design, readable when embedded in a notebook."
+    ],
+    "review": "Revisión visual del resultado; ilustración conceptual, no evidencia experimental."
+  },
+  {
+    "chapter": 2,
+    "file": "recursos/ilustraciones/capitulo_2.png",
+    "tool": "ImageGen integrada",
+    "prompts": [
+      "Use case: scientific-educational. Premium landscape Spanish university Deep Learning illustration. White background, fine charcoal lines, gold and teal accent colors, elegant legible serif labels. Show a beautifully shaded bowl-like elongated loss landscape with two visibly different conceptual optimizer trajectories on its surface from same start to low valley, one zig-zagging and one smoother. A right inset magnifies one local point with gradient arrow uphill and update arrow downhill, clearly opposite. Exact labels: 'Optimizar paso a paso', 'Pérdida', 'Parámetros', 'Gradiente', 'Actualización', 'Trayectorias ilustrativas'. No claim that a particular optimizer always wins, no labels SGD or Adam on the illustrative paths, no invented performance statistics. The arrows must agree with the bowl geometry. Visually precise, calm academic design, educational not decorative, no logos.",
+      "Edit only the magnifying circular inset on the right of this loss landscape illustration. Make the teal 'Gradiente' arrow and the golden 'Actualización' arrow exactly collinear and opposite, both originating at the same teal marked point. Teal arrow must point upper left along rising surface; gold arrow lower right along falling surface. This is a mathematically essential correction: update = negative learning rate times gradient. Preserve all other illustration elements and exact Spanish labels, composition, colors and quality."
+    ],
+    "review": "Revisión visual del resultado; ilustración conceptual, no evidencia experimental."
+  },
+  {
+    "chapter": 3,
+    "file": "recursos/ilustraciones/capitulo_3.png",
+    "tool": "ImageGen integrada",
+    "prompts": [
+      "Use case: scientific-educational. Create a beautiful high quality landscape Spanish university notebook illustration explaining generalization. White background, charcoal linework, teal and restrained golden yellow, precise editorial serif typography. Three equal panels each displaying exactly the same set of eight teal training dots sampled along a gently curved trend with small noise. Left panel straight line misses curvature. Center panel a smooth low-complexity curve follows overall trend. Right panel an excessively wavy curve passes through every training dot. Include three hollow gold unseen dots per panel, in same positions, clearly showing that passing through training dots need not predict unseen dots. Exact labels: 'Aprender sin memorizar', 'Capacidad insuficiente', 'Patrón general', 'Sobreajuste', 'Datos de entrenamiento', 'Datos nuevos', 'Esquema conceptual'. No axes numerical values, no fabricated metric claims, no logos. Clear restrained academic illustration, generous space, all labels legible. Curves and dots must match the intended concept.",
+      "Use case: scientific-educational. Create a very high quality landscape Spanish academic illustration explaining dataset separation, not a chart. White background, charcoal fine lines, teal and gold accents, elegant editorial typography. A pile of small sample cards on left branches into three clearly separate trays at center. Tray one has many teal cards and is connected to a simple model training gear icon. Tray two has gold cards and is connected to a comparison magnifying glass. Tray three has pale grey cards and a small seal icon, and is connected only to a final report page on right, with no arrow back to training. Exact labels: 'Aprender y comprobar', 'Datos', 'Entrenamiento', 'Validación', 'Test reservado', 'Ajustar parámetros', 'Elegir configuración', 'Evaluación final'. Make branches independent, preserve test separation, convey that validation selects settings while test is used only for final evaluation. No percentages, no measured curves, no statistics, no additional text or logos. Crisp, beautiful, restrained scientific editorial layout."
+    ],
+    "review": "Revisión visual del resultado; ilustración conceptual, no evidencia experimental."
+  },
+  {
+    "chapter": 4,
+    "file": "recursos/ilustraciones/capitulo_4.png",
+    "tool": "ImageGen integrada",
+    "prompts": [
+      "Use case: scientific-educational. High quality Spanish university Deep Learning illustration, landscape, white background, fine charcoal outlines with golden yellow and teal highlights, generous whitespace. Explain convolution visually as a three-stage process. Left: a clean square grid image of a bright vertical edge, with a highlighted 3x3 local window. Center: magnified 3x3 filter and small local patch side by side, linked by a multiplication sign and then a summation symbol. Right: a response grid where the vertical edge has been detected, one highlighted cell corresponding to the window. Arrows flow left to right. A small curved arrow under the left panel indicates moving the SAME filter across the input. Exact labels only: 'Un filtro, muchas posiciones', 'Ventana local', 'Pesos compartidos', 'Productos y suma', 'Mapa de respuesta'. Do not put any numbers into grids, this is a conceptual illustration; exact numerical calculation will be in the notebook. Elegant textbook design, mathematically sensible, no decorative neurons or logos."
+    ],
+    "review": "Revisión visual del resultado; ilustración conceptual, no evidencia experimental."
+  },
+  {
+    "chapter": 5,
+    "file": "recursos/ilustraciones/capitulo_5.png",
+    "tool": "ImageGen integrada",
+    "prompts": [
+      "Use case: scientific-educational. Premium landscape textbook illustration in Spanish explaining attention for a university Deep Learning notebook. White background, charcoal fine linework, teal and gold accents, elegant legible typography. Four stages left to right: one query vector depicted as a small vertical stack; a bank of four key vectors with one visually more similar to query; four weight bars of varied height after a softmax box; a weighted sum of four value vectors into one output vector. Clearly separate keys used for matching from values used for mixing by showing separate paired rows. Exact labels only: 'Consultar y combinar', 'Consulta Q', 'Claves K', 'Softmax', 'Pesos de atención', 'Valores V', 'Suma ponderada'. Use arrows consistently to show Q and K enter comparison and weights then multiply V. No actual numbers, no misleading measured attention or language semantics, no logos. Visually clear scientific editorial design; conceptual only, exact numerical calculations will be in code.",
+      "Correct this illustration precisely: the output vector at far right must contain exactly FOUR equal stacked cells, matching each of the four-cell Valores V vectors. Remove the existing five-cell output and replace it with a four-cell vector. Preserve all other content and typography. The weighted sum of four-dimensional value vectors is four-dimensional. Preserve Spanish labels and clean high-quality appearance.",
+      "Edit this illustration to remove ALL horizontal subdivision lines within EVERY vector rectangle: the query, all four keys, all four values and the final output. Keep their outer borders and fill colors. They should be abstract solid vector bars, NOT grids or numbered dimension diagrams. This avoids incorrect inferred dimensionality; do not change arrows, labels, layout or the weight histogram. Preserve beautiful Spanish scientific typography and white background."
+    ],
+    "review": "Revisión visual del resultado; ilustración conceptual, no evidencia experimental."
+  }
+]

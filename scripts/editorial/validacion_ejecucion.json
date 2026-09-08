@@ -1,0 +1,310 @@
+[
+  {
+    "notebook": "capitulo_1/01_datos_y_tensores.ipynb",
+    "sha256": "7f6bb29ae59454d26419ffbce078c010aaded0e1f4deca1feead35ca86bfbe37",
+    "status": "passed",
+    "seconds": 5.87,
+    "code_cells": 4
+  },
+  {
+    "notebook": "capitulo_1/02_neurona_artificial.ipynb",
+    "sha256": "4334badee8d7c284bd9147dfdfe1b77d0aeb1daff505d389ea707f44d088acf1",
+    "status": "passed",
+    "seconds": 5.96,
+    "code_cells": 4
+  },
+  {
+    "notebook": "capitulo_1/03_perceptron.ipynb",
+    "sha256": "6c396131dbbec103efb352053ea80c02f48981b7c8982c4b784df44a5d84a118",
+    "status": "passed",
+    "seconds": 1.59,
+    "code_cells": 4
+  },
+  {
+    "notebook": "capitulo_1/04_neuronas_y_capas.ipynb",
+    "sha256": "f0a4d2c0e8e67e042dd0673807c49a43dbfb8c9d8367e76a5c2039c5dbba6982",
+    "status": "passed",
+    "seconds": 1.39,
+    "code_cells": 3
+  },
+  {
+    "notebook": "capitulo_1/05_ndarray.ipynb",
+    "sha256": "42fc5d172985560abcf0409fc66a718ab643291555b4041fc29c4a97241235f1",
+    "status": "passed",
+    "seconds": 177.94,
+    "code_cells": 25
+  },
+  {
+    "notebook": "capitulo_1/06_image_classification_dataset.ipynb",
+    "sha256": "d441227c60b4133d2b4fe5937ff01a6c3d2102512b28fd3ff9b1df5065774927",
+    "status": "passed",
+    "seconds": 178.91,
+    "code_cells": 11
+  },
+  {
+    "notebook": "capitulo_1/07_mlp.ipynb",
+    "sha256": "29a5666b5f079704926ee448d432287cafccf43cabf0ad54ccd1b1e54049af5d",
+    "status": "passed",
+    "seconds": 56.28,
+    "code_cells": 8
+  },
+  {
+    "notebook": "capitulo_1/08_mlp_implementation.ipynb",
+    "sha256": "0bb6de382063f10c8585a8e1b327581e4bb6ca214b7f52909621b126de5f74eb",
+    "status": "passed",
+    "seconds": 6.09,
+    "code_cells": 8
+  },
+  {
+    "notebook": "capitulo_1/90_explorador_visual.ipynb",
+    "sha256": "48857d2c832c90d0669651dbfd4c525c912b445e6e14292dbce04b2519afc38b",
+    "status": "passed",
+    "seconds": 66.99,
+    "code_cells": 4
+  },
+  {
+    "notebook": "capitulo_2/01_autograd.ipynb",
+    "sha256": "bbbde9af288b32a33edcf1b4c990b13f73c751e34c99cbe91abbf698f0f30028",
+    "status": "passed",
+    "seconds": 2.36,
+    "code_cells": 14
+  },
+  {
+    "notebook": "capitulo_2/02_backprop.ipynb",
+    "sha256": "5d2d663b898a0fc52f3b4a3a22d241c0c7917d0903c17db05967198ce3cf32da",
+    "status": "passed",
+    "seconds": 56.02,
+    "code_cells": 1
+  },
+  {
+    "notebook": "capitulo_2/03_softmax_regression.ipynb",
+    "sha256": "70e48ed542ec81f8780e746f9d204dd5d4277c4e2a170f0e861c3713506a162a",
+    "status": "passed",
+    "seconds": 11.23,
+    "code_cells": 1
+  },
+  {
+    "notebook": "capitulo_2/04_gd.ipynb",
+    "sha256": "7bc7640821d90b4e81a878a900774ec17e0fe65b8aabc20d09a54c4d02b5e0ad",
+    "status": "passed",
+    "seconds": 2.67,
+    "code_cells": 14
+  },
+  {
+    "notebook": "capitulo_2/05_minibatch_sgd.ipynb",
+    "sha256": "44412d2c385813de8bd4f488169d81f504bd2df5f9d21c33ee19fe6835a060b2",
+    "status": "passed",
+    "seconds": 6.73,
+    "code_cells": 17
+  },
+  {
+    "notebook": "capitulo_2/06_momentum.ipynb",
+    "sha256": "afbf7c33972f212c1ec14fe09577ef9f7c82a9c83f4e1a1fc96b0b075410f018",
+    "status": "passed",
+    "seconds": 4.12,
+    "code_cells": 13
+  },
+  {
+    "notebook": "capitulo_2/07_adam.ipynb",
+    "sha256": "c7e098d61589fa82abcec0314dd6c1a5a22a9f3942116fae832ca636c872efd3",
+    "status": "passed",
+    "seconds": 3.84,
+    "code_cells": 5
+  },
+  {
+    "notebook": "capitulo_2/90_explorador_visual.ipynb",
+    "sha256": "fcf0bb2d231b58f72201c27ac1bcc90209ec4f8a5e4fbeb9a38f8cbe48f5ae29",
+    "status": "passed",
+    "seconds": 66.03,
+    "code_cells": 3
+  },
+  {
+    "notebook": "capitulo_3/01_generalization.ipynb",
+    "sha256": "ef1cd1a88dc6f8bf34e89ef28d1c598f1d28539f385874b24dc8eb3359495a22",
+    "status": "passed",
+    "seconds": 10.98,
+    "code_cells": 1
+  },
+  {
+    "notebook": "capitulo_3/02_weight_decay.ipynb",
+    "sha256": "5a1fc6954eb0f0d5a9c98b54fb22931f91d7e6dc1e29f0ddde628ba1fb027904",
+    "status": "passed",
+    "seconds": 3.28,
+    "code_cells": 10
+  },
+  {
+    "notebook": "capitulo_3/03_dropout.ipynb",
+    "sha256": "23be3da4a4187ab2934f8ccf760bd1879cf7b09f7c77f1c47e7b77b575b39cc0",
+    "status": "passed",
+    "seconds": 3.16,
+    "code_cells": 8
+  },
+  {
+    "notebook": "capitulo_3/04_numerical_stability_and_init.ipynb",
+    "sha256": "71c227027f29e76b0f1dd54a4492818f562bc83faca86be9d5900cbcc63fa8dc",
+    "status": "passed",
+    "seconds": 2.3,
+    "code_cells": 4
+  },
+  {
+    "notebook": "capitulo_3/05_batch_norm.ipynb",
+    "sha256": "5fd632d006feb1b0d46cc6bbb3b1b277bcad89a81fb854fbeb2f7b1e64282557",
+    "status": "passed",
+    "seconds": 3.9,
+    "code_cells": 9
+  },
+  {
+    "notebook": "capitulo_3/06_image_augmentation.ipynb",
+    "sha256": "6e9a56504b98d568db482f649952078050eddda364ea96315092e0cd9b99d256",
+    "status": "passed",
+    "seconds": 27.0,
+    "code_cells": 18
+  },
+  {
+    "notebook": "capitulo_3/90_explorador_visual.ipynb",
+    "sha256": "5de79eddfacf32feba66888ffe56727fcc6d1a1be6a987c2f01e10bcef0f6ecf",
+    "status": "passed",
+    "seconds": 2.14,
+    "code_cells": 3
+  },
+  {
+    "notebook": "capitulo_4/01_conv_layer.ipynb",
+    "sha256": "d51f157e6386cba73549c50974cab1cad23fa20fbcb59a965d4dcb174ad51c8f",
+    "status": "passed",
+    "seconds": 2.27,
+    "code_cells": 11
+  },
+  {
+    "notebook": "capitulo_4/02_padding_and_strides.ipynb",
+    "sha256": "cfd1ddfc21d7cc0ddcc14f72acbe9ec38788a387ab0ccd6d557a1da82a1429fe",
+    "status": "passed",
+    "seconds": 2.45,
+    "code_cells": 6
+  },
+  {
+    "notebook": "capitulo_4/03_channels.ipynb",
+    "sha256": "efaaa20ed80a5866988128ffb61682b4ebb3b57fac6861111d98dcd976ad996a",
+    "status": "passed",
+    "seconds": 2.32,
+    "code_cells": 9
+  },
+  {
+    "notebook": "capitulo_4/04_pooling.ipynb",
+    "sha256": "df3e88c1374910821fb5e7783303e5bd59f946f26999f21a77cd7a98ddc93b20",
+    "status": "passed",
+    "seconds": 2.36,
+    "code_cells": 11
+  },
+  {
+    "notebook": "capitulo_4/05_lenet.ipynb",
+    "sha256": "3c8f2837e881e900f870bf3e6098ea0cf6f16b23dd564b4f7a94bad08d511a06",
+    "status": "passed",
+    "seconds": 3.09,
+    "code_cells": 6
+  },
+  {
+    "notebook": "capitulo_4/06_resnet.ipynb",
+    "sha256": "8d0db01a5197399f49c354d83dfdedcc208597a5897c3f2e7e0cc127005123b7",
+    "status": "passed",
+    "seconds": 39.35,
+    "code_cells": 13
+  },
+  {
+    "notebook": "capitulo_4/07_fine_tuning.ipynb",
+    "sha256": "0054173c4fbfd1dcfb04d2d93b5272f513f4231d02c3fa73b720176ba352482f",
+    "status": "passed",
+    "seconds": 50.52,
+    "code_cells": 14
+  },
+  {
+    "notebook": "capitulo_4/90_explorador_visual.ipynb",
+    "sha256": "f5b152841d858ffd74e33b5a6282e5906aa13286bf3f51b18287ba9d8da0227c",
+    "status": "passed",
+    "seconds": 2.23,
+    "code_cells": 4
+  },
+  {
+    "notebook": "capitulo_4/91_autoencoder_visual.ipynb",
+    "sha256": "0f7523cccfffe7d72a005c3e52d1aec54413daaef38ef4371cb68e17e2b44a92",
+    "status": "passed",
+    "seconds": 2.36,
+    "code_cells": 3
+  },
+  {
+    "notebook": "capitulo_5/01_sequence.ipynb",
+    "sha256": "c2e86c3fc032fc71109d1b22ffd30eec6db1b07b8b178d54ff23838b263c61ce",
+    "status": "passed",
+    "seconds": 18.27,
+    "code_cells": 11
+  },
+  {
+    "notebook": "capitulo_5/02_rnn_concise.ipynb",
+    "sha256": "b7b3c7969625059ce75bf96e3ca3c58174f4215ab84d9018e576271e446491d9",
+    "status": "passed",
+    "seconds": 3.44,
+    "code_cells": 7
+  },
+  {
+    "notebook": "capitulo_5/03_bptt.ipynb",
+    "sha256": "09e60739e9c3a2575687a20ec6cae03c01ff1463bb8b332a91b3894d1e39641b",
+    "status": "passed",
+    "seconds": 4.65,
+    "code_cells": 1
+  },
+  {
+    "notebook": "capitulo_5/04_lstm.ipynb",
+    "sha256": "5955193bce756a4b09e4b27d0f447c5eb0f42e10c2bbaf3c09ed8cd602365784",
+    "status": "passed",
+    "seconds": 3.37,
+    "code_cells": 8
+  },
+  {
+    "notebook": "capitulo_5/05_gru.ipynb",
+    "sha256": "907ea7205c4f76a97919b633a6d8176cff561c69d734e2759d3fa950cd5f9213",
+    "status": "passed",
+    "seconds": 3.54,
+    "code_cells": 8
+  },
+  {
+    "notebook": "capitulo_5/06_queries_keys_values.ipynb",
+    "sha256": "d6e4ff8cbe7474970003f1be0df774cf8c7e0c8930e69a3ca33c7dfab18ce9a9",
+    "status": "passed",
+    "seconds": 4.36,
+    "code_cells": 4
+  },
+  {
+    "notebook": "capitulo_5/07_attention_scoring_functions.ipynb",
+    "sha256": "db5fbe556680097b9de74e132203085cf056f2d188e0b07cc11f0385a30529b3",
+    "status": "passed",
+    "seconds": 2.4,
+    "code_cells": 12
+  },
+  {
+    "notebook": "capitulo_5/08_multihead_attention.ipynb",
+    "sha256": "cd0c79e62b60f0148fa1a5fb7b9d4cb14e2b9fbef54802d6af44fff9ded2a0a0",
+    "status": "passed",
+    "seconds": 2.56,
+    "code_cells": 5
+  },
+  {
+    "notebook": "capitulo_5/09_self_attention_and_positional_encoding.ipynb",
+    "sha256": "f77a9a1d49ddeb4f13f6b195da3bc7e6dececfcc8fd331bfc03a7620ff5bba34",
+    "status": "passed",
+    "seconds": 2.44,
+    "code_cells": 7
+  },
+  {
+    "notebook": "capitulo_5/10_transformer.ipynb",
+    "sha256": "e1511151d17383488da66e3177cd06f0db8a448cbc4635d223f521aaa56368b1",
+    "status": "passed",
+    "seconds": 4.21,
+    "code_cells": 22
+  },
+  {
+    "notebook": "capitulo_5/90_explorador_visual.ipynb",
+    "sha256": "786daf499f5f3d0283e79b994e0e91ee65c1eb9aeb6b9caf47298f1cce56f204",
+    "status": "passed",
+    "seconds": 1.79,
+    "code_cells": 3
+  }
+]
