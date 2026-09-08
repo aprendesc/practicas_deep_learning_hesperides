@@ -1,0 +1,262 @@
+[
+  {
+    "notebook": "capitulo_1/06_image_classification_dataset.ipynb",
+    "source_cell": 1,
+    "change": "Compatibilidad, etiquetas, partición o cómputo; cotejar celda con locked."
+  },
+  {
+    "notebook": "capitulo_1/06_image_classification_dataset.ipynb",
+    "source_cell": 3,
+    "change": "Compatibilidad, etiquetas, partición o cómputo; cotejar celda con locked."
+  },
+  {
+    "notebook": "capitulo_1/06_image_classification_dataset.ipynb",
+    "source_cell": 17,
+    "change": "Compatibilidad, etiquetas, partición o cómputo; cotejar celda con locked."
+  },
+  {
+    "notebook": "capitulo_1/07_mlp.ipynb",
+    "source_cell": 1,
+    "change": "Compatibilidad, etiquetas, partición o cómputo; cotejar celda con locked."
+  },
+  {
+    "notebook": "capitulo_1/07_mlp.ipynb",
+    "source_cell": 5,
+    "change": "Compatibilidad, etiquetas, partición o cómputo; cotejar celda con locked."
+  },
+  {
+    "notebook": "capitulo_1/07_mlp.ipynb",
+    "source_cell": 9,
+    "change": "Compatibilidad, etiquetas, partición o cómputo; cotejar celda con locked."
+  },
+  {
+    "notebook": "capitulo_1/07_mlp.ipynb",
+    "source_cell": 13,
+    "change": "Compatibilidad, etiquetas, partición o cómputo; cotejar celda con locked."
+  },
+  {
+    "notebook": "capitulo_1/08_mlp_implementation.ipynb",
+    "source_cell": 1,
+    "change": "Compatibilidad, etiquetas, partición o cómputo; cotejar celda con locked."
+  },
+  {
+    "notebook": "capitulo_2/01_autograd.ipynb",
+    "source_cell": 5,
+    "change": "Compatibilidad, etiquetas, partición o cómputo; cotejar celda con locked."
+  },
+  {
+    "notebook": "capitulo_2/04_gd.ipynb",
+    "source_cell": 1,
+    "change": "Compatibilidad, etiquetas, partición o cómputo; cotejar celda con locked."
+  },
+  {
+    "notebook": "capitulo_2/05_minibatch_sgd.ipynb",
+    "source_cell": 1,
+    "change": "Compatibilidad, etiquetas, partición o cómputo; cotejar celda con locked."
+  },
+  {
+    "notebook": "capitulo_2/05_minibatch_sgd.ipynb",
+    "source_cell": 9,
+    "change": "Compatibilidad, etiquetas, partición o cómputo; cotejar celda con locked."
+  },
+  {
+    "notebook": "capitulo_2/05_minibatch_sgd.ipynb",
+    "source_cell": 27,
+    "change": "Compatibilidad, etiquetas, partición o cómputo; cotejar celda con locked."
+  },
+  {
+    "notebook": "capitulo_2/06_momentum.ipynb",
+    "source_cell": 1,
+    "change": "Compatibilidad, etiquetas, partición o cómputo; cotejar celda con locked."
+  },
+  {
+    "notebook": "capitulo_2/07_adam.ipynb",
+    "source_cell": 1,
+    "change": "Compatibilidad, etiquetas, partición o cómputo; cotejar celda con locked."
+  },
+  {
+    "notebook": "capitulo_3/02_weight_decay.ipynb",
+    "source_cell": 1,
+    "change": "Compatibilidad, etiquetas, partición o cómputo; cotejar celda con locked."
+  },
+  {
+    "notebook": "capitulo_3/03_dropout.ipynb",
+    "source_cell": 1,
+    "change": "Compatibilidad, etiquetas, partición o cómputo; cotejar celda con locked."
+  },
+  {
+    "notebook": "capitulo_3/04_numerical_stability_and_init.ipynb",
+    "source_cell": 1,
+    "change": "Compatibilidad, etiquetas, partición o cómputo; cotejar celda con locked."
+  },
+  {
+    "notebook": "capitulo_3/05_batch_norm.ipynb",
+    "source_cell": 1,
+    "change": "Compatibilidad, etiquetas, partición o cómputo; cotejar celda con locked."
+  },
+  {
+    "notebook": "capitulo_3/06_image_augmentation.ipynb",
+    "source_cell": 1,
+    "change": "Compatibilidad, etiquetas, partición o cómputo; cotejar celda con locked."
+  },
+  {
+    "notebook": "capitulo_3/06_image_augmentation.ipynb",
+    "source_cell": 3,
+    "change": "Compatibilidad, etiquetas, partición o cómputo; cotejar celda con locked."
+  },
+  {
+    "notebook": "capitulo_3/06_image_augmentation.ipynb",
+    "source_cell": 29,
+    "change": "Compatibilidad, etiquetas, partición o cómputo; cotejar celda con locked."
+  },
+  {
+    "notebook": "capitulo_4/01_conv_layer.ipynb",
+    "source_cell": 1,
+    "change": "Compatibilidad, etiquetas, partición o cómputo; cotejar celda con locked."
+  },
+  {
+    "notebook": "capitulo_4/02_padding_and_strides.ipynb",
+    "source_cell": 3,
+    "change": "Compatibilidad, etiquetas, partición o cómputo; cotejar celda con locked."
+  },
+  {
+    "notebook": "capitulo_4/03_channels.ipynb",
+    "source_cell": 1,
+    "change": "Compatibilidad, etiquetas, partición o cómputo; cotejar celda con locked."
+  },
+  {
+    "notebook": "capitulo_4/04_pooling.ipynb",
+    "source_cell": 1,
+    "change": "Compatibilidad, etiquetas, partición o cómputo; cotejar celda con locked."
+  },
+  {
+    "notebook": "capitulo_4/05_lenet.ipynb",
+    "source_cell": 1,
+    "change": "Compatibilidad, etiquetas, partición o cómputo; cotejar celda con locked."
+  },
+  {
+    "notebook": "capitulo_4/06_resnet.ipynb",
+    "source_cell": 1,
+    "change": "Compatibilidad, etiquetas, partición o cómputo; cotejar celda con locked."
+  },
+  {
+    "notebook": "capitulo_4/07_fine_tuning.ipynb",
+    "source_cell": 1,
+    "change": "Compatibilidad, etiquetas, partición o cómputo; cotejar celda con locked."
+  },
+  {
+    "notebook": "capitulo_4/07_fine_tuning.ipynb",
+    "source_cell": 9,
+    "change": "Compatibilidad, etiquetas, partición o cómputo; cotejar celda con locked."
+  },
+  {
+    "notebook": "capitulo_4/07_fine_tuning.ipynb",
+    "source_cell": 11,
+    "change": "Compatibilidad, etiquetas, partición o cómputo; cotejar celda con locked."
+  },
+  {
+    "notebook": "capitulo_4/07_fine_tuning.ipynb",
+    "source_cell": 15,
+    "change": "Compatibilidad, etiquetas, partición o cómputo; cotejar celda con locked."
+  },
+  {
+    "notebook": "capitulo_5/01_sequence.ipynb",
+    "source_cell": 1,
+    "change": "Compatibilidad, etiquetas, partición o cómputo; cotejar celda con locked."
+  },
+  {
+    "notebook": "capitulo_5/01_sequence.ipynb",
+    "source_cell": 10,
+    "change": "Compatibilidad, etiquetas, partición o cómputo; cotejar celda con locked."
+  },
+  {
+    "notebook": "capitulo_5/01_sequence.ipynb",
+    "source_cell": 13,
+    "change": "Compatibilidad, etiquetas, partición o cómputo; cotejar celda con locked."
+  },
+  {
+    "notebook": "capitulo_5/02_rnn_concise.ipynb",
+    "source_cell": 1,
+    "change": "Compatibilidad, etiquetas, partición o cómputo; cotejar celda con locked."
+  },
+  {
+    "notebook": "capitulo_5/04_lstm.ipynb",
+    "source_cell": 1,
+    "change": "Compatibilidad, etiquetas, partición o cómputo; cotejar celda con locked."
+  },
+  {
+    "notebook": "capitulo_5/05_gru.ipynb",
+    "source_cell": 1,
+    "change": "Compatibilidad, etiquetas, partición o cómputo; cotejar celda con locked."
+  },
+  {
+    "notebook": "capitulo_5/06_queries_keys_values.ipynb",
+    "source_cell": 1,
+    "change": "Compatibilidad, etiquetas, partición o cómputo; cotejar celda con locked."
+  },
+  {
+    "notebook": "capitulo_5/06_queries_keys_values.ipynb",
+    "source_cell": 5,
+    "change": "Compatibilidad, etiquetas, partición o cómputo; cotejar celda con locked."
+  },
+  {
+    "notebook": "capitulo_5/07_attention_scoring_functions.ipynb",
+    "source_cell": 1,
+    "change": "Compatibilidad, etiquetas, partición o cómputo; cotejar celda con locked."
+  },
+  {
+    "notebook": "capitulo_5/07_attention_scoring_functions.ipynb",
+    "source_cell": 15,
+    "change": "Compatibilidad, etiquetas, partición o cómputo; cotejar celda con locked."
+  },
+  {
+    "notebook": "capitulo_5/07_attention_scoring_functions.ipynb",
+    "source_cell": 21,
+    "change": "Compatibilidad, etiquetas, partición o cómputo; cotejar celda con locked."
+  },
+  {
+    "notebook": "capitulo_5/08_multihead_attention.ipynb",
+    "source_cell": 1,
+    "change": "Compatibilidad, etiquetas, partición o cómputo; cotejar celda con locked."
+  },
+  {
+    "notebook": "capitulo_5/09_self_attention_and_positional_encoding.ipynb",
+    "source_cell": 1,
+    "change": "Compatibilidad, etiquetas, partición o cómputo; cotejar celda con locked."
+  },
+  {
+    "notebook": "capitulo_5/09_self_attention_and_positional_encoding.ipynb",
+    "source_cell": 7,
+    "change": "Compatibilidad, etiquetas, partición o cómputo; cotejar celda con locked."
+  },
+  {
+    "notebook": "capitulo_5/09_self_attention_and_positional_encoding.ipynb",
+    "source_cell": 11,
+    "change": "Compatibilidad, etiquetas, partición o cómputo; cotejar celda con locked."
+  },
+  {
+    "notebook": "capitulo_5/10_transformer.ipynb",
+    "source_cell": 1,
+    "change": "Compatibilidad, etiquetas, partición o cómputo; cotejar celda con locked."
+  },
+  {
+    "notebook": "capitulo_5/10_transformer.ipynb",
+    "source_cell": 7,
+    "change": "Compatibilidad, etiquetas, partición o cómputo; cotejar celda con locked."
+  },
+  {
+    "notebook": "capitulo_5/10_transformer.ipynb",
+    "source_cell": 33,
+    "change": "Compatibilidad, etiquetas, partición o cómputo; cotejar celda con locked."
+  },
+  {
+    "notebook": "capitulo_5/10_transformer.ipynb",
+    "source_cell": 38,
+    "change": "Compatibilidad, etiquetas, partición o cómputo; cotejar celda con locked."
+  },
+  {
+    "notebook": "capitulo_5/10_transformer.ipynb",
+    "source_cell": 40,
+    "change": "Compatibilidad, etiquetas, partición o cómputo; cotejar celda con locked."
+  }
+]

@@ -17,3 +17,7 @@ __pycache__/
 
 # IDEs
 .idea/
+
+# Local editorial tooling and execution evidence
+.editorial/
+data/

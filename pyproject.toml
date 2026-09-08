@@ -5,9 +5,17 @@ description = "Prácticas de Deep Learning e Inteligencia Artificial"
 requires-python = ">=3.12,<3.13"
 dependencies = [
     "ipykernel>=6.29,<7",
+    "ipywidgets>=8.1.9",
+    "jupyterlab>=4.6.3",
     "matplotlib>=3.9,<4",
+    "matplotlib-inline>=0.2.2",
     "nbconvert>=7.16,<8",
+    "pandas>=3.0.5",
+    "requests>=2.34.2",
+    "scipy>=1.18.1",
     "torch>=2.6,<3",
+    "torchvision>=0.29.0",
+    "truststore>=0.10.4",
 ]
 
 [tool.uv]
