@@ -1,8 +1,8 @@
-# Private source corpus
-locked/
+# Teacher-only material
+professor/
 
-# Teacher-only solutions
-results/
+# Local agent instructions
+AGENTS.md
 
 # Jupyter
 .ipynb_checkpoints/
