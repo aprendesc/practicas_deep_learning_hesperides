@@ -32,4 +32,9 @@ if (target/'publication-guard.py').exists() and policy.get('upstream') and polic
 if previous.exists():wrapper+='"$hook_dir/pre-push.previous" "$@" < "$refs"\n'
 (target/'pre-push').write_text(wrapper);(target/'pre-push').chmod(0o755)
 git('config','--local','core.hooksPath',str(target));git('config','--local','remote.pushDefault','origin')
+worktree_config = subprocess.run(['git', 'config', '--bool', '--get', 'extensions.worktreeConfig'], capture_output=True, text=True)
+if worktree_config.stdout.strip() == 'true':
+ for line in git('worktree', 'list', '--porcelain').splitlines():
+  if line.startswith('worktree '):
+   subprocess.run(['git', '-C', line[9:], 'config', '--worktree', 'core.hooksPath', str(target)], check=True)
 print('Installed personal CI hooks in '+str(target))

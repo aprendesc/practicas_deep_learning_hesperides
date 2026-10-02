@@ -12,6 +12,8 @@ def private(path):
 def stop(message):sys.exit('Personal CI push blocked: '+message)
 try:
  destination=identity(sys.argv[2]);origin=policy['origin'];upstream=policy.get('upstream');same=origin==upstream
+ if sys.argv[1]=='origin' and destination!=origin:stop('origin does not match the configured personal repository.')
+ if sys.argv[1]=='upstream' and upstream and upstream.split('/')[0] in {'aprendesc','pantagruel-alpha'} and destination!=upstream:stop('upstream does not match the configured publication repository.')
  # Corporate destinations retain their previous hook and policy.
  if destination not in {origin,upstream} or (destination!=origin and destination.split('/')[0] not in {'aprendesc','pantagruel-alpha'}):sys.exit(0)
  shared=destination==upstream and not same and upstream!=origin
@@ -24,12 +26,12 @@ try:
    branch=remote_ref[len('refs/heads/'):]
    if (shared or set(remote_oid)=={'0'}) and not re.fullmatch(r'[a-z][a-z0-9_-]*/[0-9]+-[a-zA-Z0-9][a-zA-Z0-9._/-]*',branch):stop('new contribution branches must contain an issue number.')
   if shared:
-   if any(private(p) for p in git('ls-tree','-r','--name-only',local_oid).splitlines()):stop('private paths remain in the proposed tree.')
+   if any(private(p) for p in [p for p in git('ls-tree','-r','--name-only','-z',local_oid).split('\0') if p]):stop('private paths remain in the proposed tree.')
    if set(remote_oid)=={'0'}:
     # For a new branch, exclude history already fetched from the shared develop.
     base=git('rev-parse','refs/remotes/upstream/develop');revision=base+'..'+local_oid
    else:revision=remote_oid+'..'+local_oid
    for commit in git('rev-list',revision).splitlines():
-    changed=git('diff-tree','--root','-m','--diff-filter=ACMRT','--no-commit-id','--name-only','-r',commit).splitlines()
+    changed=[p for p in git('diff-tree','--root','-m','--diff-filter=ACMRT','--no-commit-id','--name-only','-z','-r',commit).split('\0') if p]
     if any(private(p) for p in changed):stop('incoming history contains private content.')
 except (OSError,ValueError,IndexError,subprocess.CalledProcessError):stop('the destination or proposed history cannot be verified.')
