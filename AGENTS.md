@@ -118,3 +118,7 @@ Without an explicit request, do not publish it in workshop. Before rebuilding, p
 - Keep comparable splits, seeds, and budgets in experimental comparisons.
 - Do not use the final test to select hyperparameters.
 - Except for deliberately generated public elements, do not copy private content from `professor/` to `workshop/`.
+
+## Personal continuous integration
+
+Follow [the repository CI policy](docs/personal-ci.md). Integrate numbered contribution branches into `origin/develop` without required unit tests. For a distinct personal or Pantagruel upstream, prepare a clean numbered branch and use a PR into upstream develop. Validate publication changes before the release PR into main. This policy supersedes earlier integration instructions where they conflict. Keep corporate upstream procedures unchanged.

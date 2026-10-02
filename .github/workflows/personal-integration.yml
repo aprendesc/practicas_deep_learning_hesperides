@@ -1,0 +1,90 @@
+{
+  "name": "Personal integration",
+  "on": {
+    "pull_request": {
+      "branches": [
+        "develop",
+        "main"
+      ]
+    },
+    "push": {
+      "branches": [
+        "develop",
+        "main"
+      ]
+    },
+    "workflow_dispatch": {}
+  },
+  "permissions": {
+    "contents": "read",
+    "pull-requests": "read"
+  },
+  "concurrency": {
+    "group": "personal-integration-${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}",
+    "cancel-in-progress": false
+  },
+  "jobs": {
+    "policy": {
+      "name": "Personal policy",
+      "runs-on": "ubuntu-latest",
+      "timeout-minutes": 5,
+      "steps": [
+        {
+          "uses": "actions/checkout@v7",
+          "with": {
+            "fetch-depth": 0
+          }
+        },
+        {
+          "name": "Check personal integration policy",
+          "run": "python3 .github/personal-ci/gate.py --policy .github/personal-ci/policy.json"
+        }
+      ],
+      "if": "${{ github.repository == 'aprendesc/practicas_deep_learning_hesperides' && (true) }}"
+    },
+    "integration": {
+      "name": "Integration",
+      "needs": "policy",
+      "if": "${{ github.repository == 'aprendesc/practicas_deep_learning_hesperides' && ((github.event_name == 'pull_request' && github.base_ref == 'main') || (github.event_name == 'push' && github.ref == 'refs/heads/main') || github.event_name == 'workflow_dispatch') }}",
+      "runs-on": "ubuntu-latest",
+      "timeout-minutes": 20,
+      "steps": [
+        {
+          "uses": "actions/checkout@v7",
+          "with": {
+            "fetch-depth": 0
+          }
+        },
+        {
+          "name": "Validate source object integrity",
+          "run": "git fsck --no-reflogs --no-dangling"
+        }
+      ]
+    },
+    "release": {
+      "name": "Release",
+      "needs": "integration",
+      "if": "${{ github.repository == 'aprendesc/practicas_deep_learning_hesperides' && (github.event_name == 'push' && github.ref == 'refs/heads/main') }}",
+      "runs-on": "ubuntu-latest",
+      "timeout-minutes": 10,
+      "permissions": {
+        "contents": "write"
+      },
+      "steps": [
+        {
+          "uses": "actions/checkout@v7",
+          "with": {
+            "fetch-depth": 0
+          }
+        },
+        {
+          "name": "Publish source release",
+          "env": {
+            "GH_TOKEN": "${{ github.token }}"
+          },
+          "run": "set -euo pipefail\ntag=\"release-${GITHUB_SHA}\"\nartifact=\"source-${GITHUB_SHA}.tar.gz\"\n# Exclude private/local context from the published source archive.\npython3 - \"$artifact\" <<'ARCHIVE'\nimport io\nimport subprocess\nimport sys\nimport tarfile\nfrom pathlib import PurePosixPath\nprivate_names = {\"context\", \"skills\", \".agents\", \".codex\", \".claude\", \".githooks\", \".worktreelink\", \"AGENTS.md\", \"CLAUDE.md\", \"SKILL.md\", \"mcps\", \"data\", \".env\", \".venv\", \"node_modules\", \".mcp-servers\", \"credentials\", \"secrets\"}\nsource = subprocess.check_output([\"git\", \"archive\", \"--format=tar\", \"HEAD\"])\nwith tarfile.open(fileobj=io.BytesIO(source), mode=\"r:\") as src:\n    with tarfile.open(sys.argv[1], mode=\"w:gz\") as dst:\n        for member in src:\n            parts = PurePosixPath(member.name).parts\n            if any(p in private_names or p.startswith(\".env.\") for p in parts):\n                continue\n            dst.addfile(member, src.extractfile(member) if member.isfile() else None)\nARCHIVE\n# Fetch an existing tag and require that it identifies this precise commit.\nif git ls-remote --exit-code --tags origin \"refs/tags/$tag\" >/dev/null 2>&1; then\n  git fetch origin \"refs/tags/$tag:refs/tags/$tag\"\n  test \"$(git rev-parse \"$tag^{commit}\")\" = \"$GITHUB_SHA\"\nfi\nif gh release view \"$tag\" >/dev/null 2>&1; then\n  git fetch origin \"refs/tags/$tag:refs/tags/$tag\"\n  test \"$(git rev-parse \"$tag^{commit}\")\" = \"$GITHUB_SHA\"\n  echo \"Release already exists for this validated commit.\"\nelse\n  gh release create \"$tag\" \"$artifact\" --target \"$GITHUB_SHA\" --title \"$tag\" --notes \"Validated source snapshot for ${GITHUB_SHA}.\"\nfi\n"
+        }
+      ]
+    }
+  }
+}
