@@ -1,0 +1,4 @@
+# Shared datasets and local credentials. Keep branch outputs in each worktree.
+professor/resources/cache_datos/
+.env
+.env.*
