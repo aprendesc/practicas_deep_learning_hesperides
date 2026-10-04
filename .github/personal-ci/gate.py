@@ -33,13 +33,13 @@ def paths(data):
 
 
 def validate(event, policy, event_name=None):
-    if policy.get('role') not in {'origin', 'upstream', 'combined'}:
+    if policy.get('role') not in {'downstream', 'upstream', 'combined'}:
         raise ValueError('Unknown policy role')
     repo = event['repository']['full_name']
     if repo != policy['repository'] or repo.split('/')[0] not in OWNERS:
         raise ValueError('Repository is outside personal policy')
-    if policy['role'] == 'origin' and repo.split('/')[0] != 'aprendesc':
-        raise ValueError('Origin must belong to aprendesc')
+    if policy['role'] == 'downstream' and repo.split('/')[0] != 'aprendesc':
+        raise ValueError('Downstream must belong to aprendesc')
     event_name = event_name or ('pull_request' if 'pull_request' in event else 'push')
     if event_name in {'push', 'workflow_dispatch'}:
         ref = event.get('ref') or os.getenv('GITHUB_REF')
