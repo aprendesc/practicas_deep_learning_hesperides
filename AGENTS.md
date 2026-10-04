@@ -118,7 +118,3 @@ Without an explicit request, do not publish it in workshop. Before rebuilding, p
 - Keep comparable splits, seeds, and budgets in experimental comparisons.
 - Do not use the final test to select hyperparameters.
 - Except for deliberately generated public elements, do not copy private content from `professor/` to `workshop/`.
-
-## Downstream continuous integration
-
-Read `$downstream-ci` for the integration policy. Integrate numbered contribution branches through validated pull requests into `downstream/develop`, without mandatory GitHub approvals or status checks. After merge, return the clean worktree to setup to develop. For a distinct personal or Pantagruel upstream, prepare a clean numbered branch and use a PR into upstream develop. Validate publication changes before the release PR into main. This policy supersedes earlier integration instructions where they conflict. Keep corporate upstream procedures unchanged.
