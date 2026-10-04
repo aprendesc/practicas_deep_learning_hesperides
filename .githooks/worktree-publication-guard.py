@@ -22,10 +22,10 @@ def identity(url):
 
 def main():
     refs = sys.stdin.read().splitlines()
-    origin = identity(git("remote", "get-url", "--push", "origin"))
+    downstream = identity(git("remote", "get-url", "--push", "downstream"))
     upstream = subprocess.run(["git", "remote", "get-url", "--push", "--all", "upstream"], capture_output=True, text=True)
     destinations = {identity(x) for x in upstream.stdout.splitlines()}
-    applies = sys.argv[1] == "upstream" or (identity(sys.argv[2]) in destinations and identity(sys.argv[2]) != origin)
+    applies = sys.argv[1] == "upstream" or (identity(sys.argv[2]) in destinations and identity(sys.argv[2]) != downstream)
     if not applies:
         return
     paths = [".githooks", ".worktreelink"]
@@ -34,7 +34,7 @@ def main():
         if set(local_oid) == {"0"}:
             continue
         if git("ls-tree", "-r", "--name-only", local_oid, "--", *paths):
-            sys.exit("Push blocked: the worktree mechanism belongs only in origin.")
+            sys.exit("Push blocked: the worktree mechanism belongs only in downstream.")
         revision = local_oid if set(remote_oid) == {"0"} else remote_oid + ".." + local_oid
         for commit in git("rev-list", revision).splitlines():
             if git("diff-tree", "--root", "-m", "--no-commit-id", "--name-only", "-r", commit, "--", *paths):

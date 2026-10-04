@@ -31,7 +31,7 @@ python3 /absolute/path/to/principal/.githooks/worktree-setup.py
 Use `--links-only` to repair state without installing dependencies. For temporary
 Git inspections, `WORKTREELINK_SKIP_SYNC=1` skips dependency installation.
 
-Version `.githooks/` and `.worktreelink` only in `origin`. The installer adds a
+Version `.githooks/` and `.worktreelink` only in `downstream`. The installer adds a
 pre-push guard and preserves the previous one. Upstream promotion must remove
 these paths from both the publication tree and incoming commits. Remotes that
 point to the same repository provide no physical separation between destinations.

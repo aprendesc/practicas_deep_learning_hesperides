@@ -11,16 +11,16 @@ def private(path):
  return parts[0] in {'context','skills','.agents','.codex','.claude','.githooks','.worktreelink'} or any(p in {'AGENTS.md','CLAUDE.md','SKILL.md'} for p in parts) or path.startswith('.github/skills/') or path in {'scripts/promote-to-upstream','scripts/prepare-upstream-branch'}
 def stop(message):sys.exit('Personal CI push blocked: '+message)
 try:
- destination=identity(sys.argv[2]);origin=policy['origin'];upstream=policy.get('upstream');same=origin==upstream
- if sys.argv[1]=='origin' and destination!=origin:stop('origin does not match the configured personal repository.')
+ destination=identity(sys.argv[2]);downstream=policy['downstream'];upstream=policy.get('upstream');same=downstream==upstream
+ if sys.argv[1]=='downstream' and destination!=downstream:stop('downstream does not match the configured personal repository.')
  if sys.argv[1]=='upstream' and upstream and upstream.split('/')[0] in {'aprendesc','pantagruel-alpha'} and destination!=upstream:stop('upstream does not match the configured publication repository.')
  # Corporate destinations retain their previous hook and policy.
- if destination not in {origin,upstream} or (destination!=origin and destination.split('/')[0] not in {'aprendesc','pantagruel-alpha'}):sys.exit(0)
- shared=destination==upstream and not same and upstream!=origin
+ if destination not in {downstream,upstream} or (destination!=downstream and destination.split('/')[0] not in {'aprendesc','pantagruel-alpha'}):sys.exit(0)
+ shared=destination==upstream and not same and upstream!=downstream
  for line in sys.stdin.read().splitlines():
   local_ref,local_oid,remote_ref,remote_oid=line.split();deleted=set(local_oid)=={'0'}
   if remote_ref in {'refs/heads/main','refs/heads/master'} or (shared and remote_ref=='refs/heads/develop'):
-   stop('base branches require a reviewed PR; origin/develop remains fast.')
+   stop('base branches require a reviewed PR; downstream/develop remains fast.')
   if deleted:continue
   if remote_ref.startswith('refs/heads/') and remote_ref!='refs/heads/develop':
    branch=remote_ref[len('refs/heads/'):]

@@ -20,22 +20,22 @@ def prepare(branch, remote=None):
     if not RELEASE.fullmatch(branch):
         raise ValueError('Use release/<number>-<title>')
     git('check-ref-format', 'refs/heads/' + branch)
-    origin = remote_identity('origin')
+    downstream = remote_identity('downstream')
     if remote is None:
         available = git('remote').decode().splitlines()
-        remote = 'upstream' if 'upstream' in available and remote_identity('upstream') != origin else 'origin'
-    if remote not in {'origin', 'upstream'}:
-        raise ValueError('Only origin or upstream release destinations are supported')
+        remote = 'upstream' if 'upstream' in available and remote_identity('upstream') != downstream else 'downstream'
+    if remote not in {'downstream', 'upstream'}:
+        raise ValueError('Only downstream or upstream release destinations are supported')
     destination = remote_identity(remote)
     source = git('rev-parse', '--verify', remote + '/develop^{commit}').decode().strip()
     base = git('rev-parse', '--verify', remote + '/main^{commit}').decode().strip()
     policy = json.loads(git('show', source + ':.github/personal-ci/policy.json'))
     if policy.get('repository', '').lower() != destination or policy.get('role') not in {'upstream', 'combined'}:
         raise ValueError('Develop must contain the matching upstream or combined release policy')
-    if policy['role'] == 'upstream' and (remote != 'upstream' or destination == origin):
+    if policy['role'] == 'upstream' and (remote != 'upstream' or destination == downstream):
         raise ValueError('Distinct upstream releases must use upstream/develop')
-    if policy['role'] == 'combined' and destination != origin:
-        raise ValueError('Combined releases must use the origin repository')
+    if policy['role'] == 'combined' and destination != downstream:
+        raise ValueError('Combined releases must use the downstream repository')
     ancestor = git('merge-base', source, base).decode().strip()
 
     def clean_tree(ref):
@@ -71,7 +71,7 @@ def prepare(branch, remote=None):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--branch', required=True)
-    parser.add_argument('--remote', choices=('origin', 'upstream'))
+    parser.add_argument('--remote', choices=('downstream', 'upstream'))
     args = parser.parse_args()
     try:
         print('Created local release branch ' + args.branch + ' at ' + prepare(args.branch, args.remote))

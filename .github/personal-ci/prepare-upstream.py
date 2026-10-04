@@ -28,9 +28,9 @@ def prepare(branch, source, base):
     if not NUMBERED.fullmatch(branch):
         raise ValueError('Branch must be numbered')
     git('check-ref-format', 'refs/heads/' + branch)
-    if source != 'origin/develop' or base != 'upstream/develop':
-        raise ValueError('Source and base must be origin/develop and upstream/develop')
-    if remote('origin') == remote('upstream'):
+    if source != 'downstream/develop' or base != 'upstream/develop':
+        raise ValueError('Source and base must be downstream/develop and upstream/develop')
+    if remote('downstream') == remote('upstream'):
         raise ValueError('Aliases require the combined-repository flow')
     source_sha = git('rev-parse', '--verify', source + '^{commit}').decode().strip()
     base_sha = git('rev-parse', '--verify', base + '^{commit}').decode().strip()
@@ -60,7 +60,7 @@ def prepare(branch, source, base):
                     raise ValueError('Tree sanitation failed')
             if ref == source_sha:
                 # Routing belongs to upstream. Deliberate CI changes require a separate
-                # upstream configuration PR, never origin promotion.
+                # upstream configuration PR, never downstream promotion.
                 for path in managed:
                     if path in baseline_files:
                         entry = git('ls-tree', '-z', base_sha, '--', path).split(b'\t', 1)[0].decode().split()
@@ -71,7 +71,7 @@ def prepare(branch, source, base):
     ancestor_tree, source_tree, base_tree = map(clean_tree, (ancestor, source_sha, base_sha))
     ancestor_commit = git('commit-tree', ancestor_tree, '-m', 'Temporary public merge base').decode().strip()
     left = git('commit-tree', base_tree, '-p', ancestor_commit, '-m', 'Temporary upstream public tree').decode().strip()
-    right = git('commit-tree', source_tree, '-p', ancestor_commit, '-m', 'Temporary origin public tree').decode().strip()
+    right = git('commit-tree', source_tree, '-p', ancestor_commit, '-m', 'Temporary downstream public tree').decode().strip()
     tree = git('merge-tree', '--write-tree', left, right).decode().splitlines()[0]
     if any(private(p) for p in paths(git('ls-tree', '-r', '--name-only', '-z', tree))):
         raise ValueError('Sanitized tree contains private paths')
@@ -84,7 +84,7 @@ def prepare(branch, source, base):
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--branch', required=True)
-    parser.add_argument('--source', default='origin/develop')
+    parser.add_argument('--source', default='downstream/develop')
     parser.add_argument('--base', default='upstream/develop')
     args = parser.parse_args()
     try:
