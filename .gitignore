@@ -19,3 +19,6 @@ calculos_local.py
 /context/
 /pyproject.toml
 /uv.lock
+
+# Configuración local del editor
+.idea/
