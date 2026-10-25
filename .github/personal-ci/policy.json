@@ -1,9 +1,0 @@
-{
-  "repository": "aprendesc/practicas_deep_learning_hesperides",
-  "role": "combined",
-  "downstream": "aprendesc/practicas_deep_learning_hesperides",
-  "upstream": "aprendesc/practicas_deep_learning_hesperides",
-  "downstream_develop_tests": false,
-  "upstream_develop_unit_tests_required": false,
-  "release_branch": "main"
-}
