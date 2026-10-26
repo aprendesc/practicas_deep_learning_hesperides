@@ -16,7 +16,6 @@ python -m jupyter lab
 
 En Windows, activa el entorno con `.venv\Scripts\activate` en lugar de `source`.
 En JupyterLab selecciona el kernel **Python (Deep Learning)** del entorno y abre un notebook de `practicas/`.
-Si ya tienes otro entorno, puedes usar un nombre de carpeta diferente en el primer comando y activarlo.
 
 ## Prácticas
 
