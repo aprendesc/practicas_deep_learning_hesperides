@@ -1,23 +1,24 @@
-# Teacher-only material
-professor/
-
-# Local agent instructions
-AGENTS.md
-
-# Jupyter
-.ipynb_checkpoints/
-
-# Python
+# Material docente privado y entornos locales
+/profesor/
+/professor/
+.venv/
+.editorial/
 __pycache__/
 *.py[cod]
-.venv/
-
-# macOS
+.ipynb_checkpoints/
 .DS_Store
+resultado_local.txt
+calculos_local.py
+# Herramientas de preparación locales: no forman parte de la entrega
+/.githooks/
+/.github/
+/.claude/
+/.worktreelink
+/AGENTS.md
+/CLAUDE.md
+/context/
+/pyproject.toml
+/uv.lock
 
-# IDEs
+# Configuración local del editor
 .idea/
-
-# Local editorial tooling and execution evidence
-.editorial/
-data/

@@ -1,39 +1,43 @@
 # Prácticas de Deep Learning · Universidad de las Hespérides
 
-Material práctico de Deep Learning e Inteligencia Artificial del Máster en Finanzas Cuantitativas y Métodos Computacionales. La selección sigue el índice de la asignatura y los apuntes de las sesiones 1–5.
+## Instalación breve
 
-Por ahora, el workshop del alumnado publica únicamente el capítulo 1. Los capítulos posteriores se desbloquearán conforme avance la asignatura.
+Necesitas Git y Python 3.12. Clona el repositorio y crea un entorno aislado:
 
-| Capítulo | Contenido | Exploración visual |
-|---|---|---|
-| [1](workshop/clases_sincronas/capitulo_1.ipynb) | Intuición, tensores y MLP | Cómo cambian las representaciones entre capas; animación del aprendizaje |
-
-## Ejecutar
-
-Desde esta carpeta, con [uv](https://docs.astral.sh/uv/) instalado:
-
-```bash
-uv sync --locked
-uv run python -m ipykernel install --user --name hesperides-lab --display-name "Python 3 (Hespérides)"
-uv run jupyter lab
+```sh
+git clone https://github.com/aprendesc/practicas_deep_learning_hesperides.git
+cd practicas_deep_learning_hesperides
+python3 -m venv .venv
+source .venv/bin/activate
+python -m pip install -r requirements.txt
+python -m ipykernel install --prefix .venv --name practicas_deep_learning_hesperides --display-name "Python (Deep Learning)"
+python -m jupyter lab
 ```
 
-Selecciona **Python 3 (Hespérides)** y ejecuta las celdas en orden con «Restart Kernel and Run All». Python 3.12 y las versiones de dependencias están fijados en `uv.lock`. Cada cuaderno puede abrirse de forma independiente desde su carpeta. Los notebooks son autocontenidos; la primera ejecución de algunos de ellos necesita Internet para descargar datos, que después se reutilizan desde la caché del usuario.
+En Windows, activa el entorno con `.venv\Scripts\activate` en lugar de `source`.
+En JupyterLab selecciona el kernel **Python (Deep Learning)** del entorno y abre un notebook de `practicas/`.
 
-El modo predeterminado usa CPU. Para que los mecanismos puedan recorrerse en un portátil, el soporte `Trainer` limita a tres épocas y 1024/256 ejemplos de entrenamiento/validación; las demostraciones CNN con el bucle antiguo usan hasta 128/64 ejemplos, lotes de 16 y tres épocas. Los ejemplos sintéticos y los exploradores tienen su configuración explícita en las celdas. Estos límites no permiten comparar de forma concluyente la calidad de arquitecturas.
+## Prácticas
 
-Para usar el régimen de entrenamiento completo de las fuentes, cierra los kernels e inicia:
+Las prácticas están agrupadas por capítulos en `practicas/capitulo_*/`. La numeración de práctica mantiene el recorrido recomendado de la lista siguiente, también cuando un ejercicio integra contenidos de varios capítulos.
 
-```bash
-HESPERIDES_COMPLETO=1 uv run jupyter lab
-```
+Completa el código iniciado. Los objetivos y pequeñas indicaciones están en cada enunciado; las referencias teóricas son opcionales. Ejecuta en orden desde la carpeta del notebook. No se incluyen comprobaciones automáticas: verifica los resultados de tu código. Una celda posterior puede fallar mientras un hueco siga sin completar.
 
-Esto elimina los límites del soporte; puede requerir bastante más tiempo y memoria. La ejecución comprobada es la del modo rápido en CPU.
+- [01 · Descenso de gradiente en una función escalar](practicas/capitulo_02/practica_01_descenso_de_gradiente_en_una_funcion_escalar.ipynb)
+- [02 · Regresión lineal mediante descenso de gradiente](practicas/capitulo_02/practica_02_regresion_lineal_mediante_descenso_de_gradiente.ipynb)
+- [03 · Implementación de SGD y momentum](practicas/capitulo_02/practica_03_implementacion_de_sgd_y_momentum.ipynb)
+- [04 · Forward pass y backpropagation en una red neuronal](practicas/capitulo_01/practica_04_forward_pass_y_backpropagation_en_una_red_neuronal.ipynb)
+- [05 · Implementación de un MLP con NumPy](practicas/capitulo_01/practica_05_implementacion_de_un_mlp_con_numpy.ipynb)
+- [06 · Diferenciación automática con autograd](practicas/capitulo_02/practica_06_diferenciacion_automatica_con_autograd.ipynb)
+- [07 · Entrenamiento y evaluación de un MLP con PyTorch](practicas/capitulo_03/practica_07_entrenamiento_y_evaluacion_de_un_mlp_con_pytorch.ipynb)
+- [08 · Correlación bidimensional y clasificación con una CNN](practicas/capitulo_04/practica_08_correlacion_bidimensional_y_clasificacion_con_una_cnn.ipynb)
+- [09 · Aprendizaje de representaciones con autoencoders](practicas/capitulo_04/practica_09_aprendizaje_de_representaciones_con_autoencoders.ipynb)
+- [10 · Implementación de scaled dot-product attention](practicas/capitulo_05/practica_10_implementacion_de_scaled_dot_product_attention.ipynb)
 
-Los controles interactivos necesitan un kernel activo en JupyterLab. Las animaciones de capas y convolución incluyen reproducción, pausa y selección de fotogramas. Cada explorador contiene también una figura de referencia para las exportaciones estáticas. Las ilustraciones de ImageGen son conceptuales; las curvas, mapas y animaciones se calculan con Python.
+Los datos de práctica están incluidos en el repositorio.
 
-## Guía docente
+Los entrenamientos usan CPU, datos sintéticos y presupuestos de ejecución acotados y explícitos en las celdas. No descargan modelos ni datasets. Las figuras representan cálculos del ejemplo y no resultados de arquitecturas de gran escala. PyTorch ocupa más espacio que el repositorio y se instala en el entorno, no se versiona.
 
-`professor/`, excluida de Git, contiene el catálogo docente completo: los cinco capítulos, respuestas, justificaciones y orientación para dirigir las actividades. Su capítulo 1 es el espejo enriquecido del material actualmente publicado. Además, `professor/resources/` conserva las notas, fuentes, medios, datos y herramientas privadas de construcción.
+## Exámenes
 
-La documentación de procedencia, la evidencia de validación y las herramientas de reconstrucción se conservan exclusivamente en el área docente.
+`examenes/` contiene únicamente `.gitkeep` para conservar la carpeta en Git. No hay exámenes publicados. Aquí aparecerán los exámenes práctico y teórico cuando se pongan a disposición.
