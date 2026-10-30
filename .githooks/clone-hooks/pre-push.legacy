@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+set -euo pipefail
+# worktree-setup dispatcher
+hook_dir="$(cd "$(dirname "$0")" && pwd)"
+principal="$(git worktree list --porcelain | sed -n '1s/^worktree //p')"
+refs="$(mktemp)"
+trap 'rm -f "$refs"' EXIT
+cat > "$refs"
+guard="$hook_dir/worktree-publication-guard.py"
+if [ ! -f "$guard" ]; then
+    common="$(git rev-parse --path-format=absolute --git-common-dir)"
+    guard="$common/worktree-setup/worktree-publication-guard.py"
+fi
+python3 "$guard" "$@" < "$refs"
+if [ -x "$hook_dir/pre-push.before-worktree-setup" ]; then
+    "$hook_dir/pre-push.before-worktree-setup" "$@" < "$refs"
+elif git config --get filter.lfs.clean >/dev/null 2>&1; then
+    git lfs pre-push "$@" < "$refs"
+fi

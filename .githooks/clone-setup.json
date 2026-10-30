@@ -1,0 +1,6 @@
+{
+  "repository": "practicas_deep_learning_hesperides",
+  "downstream_url": "https://github.com/aprendesc/practicas_deep_learning_hesperides.git",
+  "upstream_url": "https://github.com/aprendesc/practicas_deep_learning_hesperides.git",
+  "local_env_files": []
+}

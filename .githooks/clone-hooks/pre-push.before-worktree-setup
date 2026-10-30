@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+set -euo pipefail
+hook_dir="$(cd "$(dirname "$0")" && pwd)"
+refs="$(mktemp)"
+trap 'rm -f "$refs"' EXIT
+cat > "$refs"
+python3 "$hook_dir/personal-guard.py" "$@" < "$refs"
