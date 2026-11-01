@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+set -euo pipefail
+if [[ $# -lt 1 || $# -gt 2 ]]; then
+  echo 'Usage: scripts/promote-to-upstream <existing-upstream-branch> [source-ref]' >&2
+  exit 2
+fi
+root="$(git rev-parse --show-toplevel)"
+cd "$root"
+python3 .githooks/clone-hooks/publication.py prepare "${2:-develop}" "$1"
