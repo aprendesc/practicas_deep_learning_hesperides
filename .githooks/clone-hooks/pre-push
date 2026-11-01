@@ -5,6 +5,7 @@ refs="$(mktemp)"
 trap 'rm -f "$refs"' EXIT
 cat > "$refs"
 python3 "$hook_dir/destination-guard.py" "$@" < "$refs"
+python3 "$hook_dir/publication.py" check "$@" < "$refs"
 if [ -x "$hook_dir/pre-push.legacy" ]; then
     "$hook_dir/pre-push.legacy" "$@" < "$refs"
 elif git config --get filter.lfs.clean >/dev/null 2>&1; then
