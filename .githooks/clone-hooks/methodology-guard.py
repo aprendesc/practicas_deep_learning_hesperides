@@ -15,6 +15,7 @@ from pathlib import Path
 import re
 import subprocess
 import sys
+import tempfile
 
 sys.dont_write_bytecode = True
 HOOKS = Path(__file__).resolve().parent
@@ -265,10 +266,22 @@ def lines(ref, path):
     return Counter(data.decode('utf-8', 'surrogateescape').splitlines())
 
 
-def check_integrated(source, name):
-    """The downstream PR comes first: every line the branch adds is in downstream develop, and every line it removes is gone.
+def merge_is_noop(base, develop, source, path):
+    """Merging the branch version of an existing file into develop changes nothing."""
+    with tempfile.TemporaryDirectory() as folder:
+        files = []
+        for label, ref in (('develop', develop), ('base', base), ('branch', source)):
+            target = Path(folder) / label
+            target.write_bytes(subprocess.run(['git', 'cat-file', 'blob', ref + ':' + path], capture_output=True).stdout)
+            files.append(str(target))
+        result = subprocess.run(['git', 'merge-file', '-p', *files], capture_output=True)
+        return result.returncode == 0 and result.stdout == Path(files[0]).read_bytes()
 
-    Line containment keeps the check valid when another task touches or creates the same file.
+
+def check_integrated(source, name):
+    """The downstream PR comes first: merging the branch into downstream develop changes nothing.
+
+    Per file, so the check stays valid when another task touches or creates the same file.
     """
     develop = 'refs/remotes/downstream/develop'
     if not git('rev-parse', '-q', '--verify', develop, check=False):
@@ -284,10 +297,10 @@ def check_integrated(source, name):
         if (path in branch) != (path in integrated):  # Added or deleted by the branch, not by develop.
             pending.append(path)
             continue
-        before, after, merged = lines(base, path), lines(source, path), lines(develop, path)
-        added_missing = (after - before) - merged
-        removed_kept = (before - after) - (before - merged)
-        if added_missing or removed_kept:
+        if path not in public_tree(base):  # Created by the branch: its lines are in develop.
+            if lines(source, path) - lines(develop, path):
+                pending.append(path)
+        elif not merge_is_noop(base, develop, source, path):
             pending.append(path)
     if pending:
         stop('downstream/' + name + ' is not integrated in downstream develop; merge its downstream PR first'
