@@ -217,10 +217,17 @@ def check_develop(local, remote, rules, mirrors):
     if mirrors:
         if not bases:
             stop('fetch upstream first: develop must be verified against its upstream base branch.')
+        if not ancestor(bases[0], local):
+            stop('integrate ' + bases[0][len('refs/remotes/'):] + ' into develop first; downstream develop stays synchronized with upstream.')
+        # Divergence from upstream only enters through downstream PRs merged on GitHub and pending upstream;
+        # a push never adds its own.
         mine, theirs = public_tree(local), public_tree(bases[0])
-        differing = sorted(p for p in set(mine) | set(theirs) if mine.get(p) != theirs.get(p))
-        if differing:
-            stop('develop must equal ' + bases[0][len('refs/remotes/'):] + ' plus private files; differs in: ' + ', '.join(differing[:8]))
+        accepted = public_tree(remote) if remote else {}
+        introduced = sorted(p for p in set(mine) | set(theirs)
+                            if mine.get(p) != theirs.get(p) and mine.get(p) != accepted.get(p))
+        if introduced:
+            stop('develop must equal ' + bases[0][len('refs/remotes/'):] + ' plus private files and downstream PRs pending upstream;'
+                 ' this push adds: ' + ', '.join(introduced[:8]))
 
 
 def check_task(local, number, slug_hint=None):
