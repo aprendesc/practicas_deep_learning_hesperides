@@ -57,6 +57,10 @@ def main():
                 if f.name.startswith(('pre-', 'post-')):
                     (target / f.name).chmod(0o755)
         shutil.copy2(root / '.githooks/clone-setup.json', target / 'clone-policy.json')
+        keep = {f.name for f in source.iterdir() if f.is_file()} | {'clone-policy.json'}
+        for stale in target.iterdir():
+            if stale.name not in keep:
+                shutil.rmtree(stale) if stale.is_dir() and not stale.is_symlink() else stale.unlink()
         git(root, 'config', 'core.hooksPath', str(target))
         if args.source_base:
             base = args.source_base.resolve()
@@ -84,7 +88,10 @@ def main():
         installed = effective / f.name
         if not installed.is_file() or installed.read_bytes() != f.read_bytes():
             problems.append('Hook payload missing or outdated: ' + f.name)
-    for hook in ['pre-commit', 'pre-push']:
+    expected = {f.name for f in source.iterdir() if f.is_file()} | {'clone-policy.json'}
+    for extra in sorted(p.name for p in effective.iterdir() if p.name not in expected) if effective.is_dir() else []:
+        problems.append('Stale hook file: ' + extra)
+    for hook in ['pre-commit', 'pre-push', 'post-merge', 'post-commit']:
         if not os.access(effective / hook, os.X_OK):
             problems.append('Hook is not executable: ' + hook)
     if not git(root, 'remote', 'get-url', 'upstream', check=False):

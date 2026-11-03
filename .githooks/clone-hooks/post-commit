@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+set -euo pipefail
+hook_dir="$(cd "$(dirname "$0")" && pwd)"
+python3 -B "$hook_dir/methodology-guard.py" post-commit || true
+if git config --get filter.lfs.clean >/dev/null 2>&1; then
+    git lfs post-commit "$@"
+fi
