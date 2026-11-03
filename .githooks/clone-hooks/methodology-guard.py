@@ -8,6 +8,7 @@ pre-push REMOTE URL         protected branches, develop provenance and task bran
 post-merge | post-commit    warn when a merge drops private methodology content and refresh
                             the installed hooks when the versioned baseline changed.
 """
+from collections import Counter
 import json
 import os
 from pathlib import Path
@@ -259,8 +260,16 @@ def publishable(commit):
     return entries
 
 
+def lines(ref, path):
+    data = subprocess.run(['git', 'cat-file', 'blob', ref + ':' + path], capture_output=True).stdout
+    return Counter(data.decode('utf-8', 'surrogateescape').splitlines())
+
+
 def check_integrated(source, name):
-    """The downstream PR comes first: the branch change must already be in downstream develop."""
+    """The downstream PR comes first: every line the branch adds is in downstream develop, and every line it removes is gone.
+
+    Line containment keeps the check valid when another task touches or creates the same file.
+    """
     develop = 'refs/remotes/downstream/develop'
     if not git('rev-parse', '-q', '--verify', develop, check=False):
         stop('fetch downstream first: upstream publication needs downstream/develop.')
@@ -268,10 +277,39 @@ def check_integrated(source, name):
     changed = [p for p in git('diff', '--name-only', '-z', base, source).split('\0')
                if p and not private(p) and not p.startswith(DOWNSTREAM_CI)]
     branch, integrated = public_tree(source), public_tree(develop)
-    pending = sorted(p for p in changed if branch.get(p) != integrated.get(p))
+    pending = []
+    for path in changed:
+        if branch.get(path) == integrated.get(path):
+            continue
+        if (path in branch) != (path in integrated):  # Added or deleted by the branch, not by develop.
+            pending.append(path)
+            continue
+        before, after, merged = lines(base, path), lines(source, path), lines(develop, path)
+        added_missing = (after - before) - merged
+        removed_kept = (before - after) - (before - merged)
+        if added_missing or removed_kept:
+            pending.append(path)
     if pending:
         stop('downstream/' + name + ' is not integrated in downstream develop; merge its downstream PR first'
-             ' (or update the branch from develop). Pending: ' + ', '.join(pending[:8]))
+             ' (or update the branch from develop). Pending: ' + ', '.join(sorted(pending)[:8]))
+
+
+def check_orthogonal(source, name):
+    """A task reaches upstream alone: its branch carries no other downstream PR still pending upstream."""
+    develop = 'refs/remotes/downstream/develop'
+    pending = git('rev-list', '--first-parent', '--merges', '--format=%H %P %s', develop, '--not', *base_refs())
+    for line in pending.splitlines():
+        if line.startswith('commit '):
+            continue
+        commit, *rest = line.split(' ')
+        parents = [p for p in rest if re.fullmatch(r'[0-9a-f]{40}', p)]
+        subject = ' '.join(rest[len(parents):])
+        merged = re.search(r'Merge pull request #\d+ from [^/\s]+/(\S+)', subject)
+        if not merged or merged[1] == name or len(parents) < 2:
+            continue
+        if ancestor(commit, source) or ancestor(parents[1], source):
+            stop('downstream/' + name + ' contains ' + merged[1] + ', another downstream PR pending upstream;'
+                 ' tasks reach upstream independently. Rebuild the branch from the upstream base.')
 
 
 def check_upstream_branch(local, name, mirrors):
@@ -284,6 +322,7 @@ def check_upstream_branch(local, name, mirrors):
     if differing:
         stop('upstream ' + name + ' must carry exactly the public content of downstream/' + name + '; differs in: ' + ', '.join(differing[:8]))
     check_integrated(source, name)
+    check_orthogonal(source, name)
     if mirrors:
         leaked = [p for p in tree_names(local) if p.startswith(DOWNSTREAM_CI)]
         for commit in git('rev-list', local, '--not', '--remotes=upstream').splitlines():
