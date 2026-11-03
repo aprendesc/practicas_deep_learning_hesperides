@@ -18,7 +18,7 @@ import sys
 sys.dont_write_bytecode = True
 HOOKS = Path(__file__).resolve().parent
 sys.path.insert(0, str(HOOKS))
-from publication import identity, private  # noqa: E402  (shared private-path definition)
+from publication import clean_ignore, identity, private  # noqa: E402  (shared publication rules)
 
 PROTECTED = {'develop', 'main', 'master'}
 TASK = re.compile(r'[a-z][a-z0-9-]*/([1-9]\d*)-[a-z0-9]+(?:-[a-z0-9]+)*')
@@ -240,6 +240,36 @@ def check_task(local, number, slug_hint=None):
         stop('issue ' + slug.split('/', 1)[1] + '#' + number + ' is ' + state.lower() + '; task branches need an open issue.')
 
 
+def publishable(commit):
+    """Public tree as publication prepares it: private paths out, private .gitignore lines filtered."""
+    entries = public_tree(commit)
+    for name, meta in entries.items():
+        if Path(name).name == '.gitignore':
+            mode, kind, oid = meta.split()
+            data = subprocess.run(['git', 'cat-file', 'blob', oid], capture_output=True, check=True).stdout
+            clean = subprocess.run(['git', 'hash-object', '--stdin'], input=clean_ignore(data), capture_output=True, check=True).stdout
+            entries[name] = ' '.join((mode, kind, clean.decode().strip()))
+    return entries
+
+
+def check_upstream_branch(local, name, mirrors):
+    """A distinct upstream only receives the public content of the homonymous downstream branch."""
+    source = 'refs/remotes/downstream/' + name
+    if not git('rev-parse', '-q', '--verify', source, check=False):
+        stop('upstream branch ' + name + ' needs the homonymous downstream branch; push it to downstream and fetch first.')
+    mine, theirs = publishable(local), publishable(source)
+    differing = sorted(p for p in set(mine) | set(theirs) if mine.get(p) != theirs.get(p))
+    if differing:
+        stop('upstream ' + name + ' must carry exactly the public content of downstream/' + name + '; differs in: ' + ', '.join(differing[:8]))
+    if mirrors:
+        leaked = [p for p in tree_names(local) if p.startswith(DOWNSTREAM_CI)]
+        for commit in git('rev-list', local, '--not', '--remotes=upstream').splitlines():
+            leaked += [p for p in git('diff-tree', '--root', '-m', '--no-commit-id', '--name-only', '-r', '-z', commit).split('\0')
+                       if p.startswith(DOWNSTREAM_CI)]
+        if leaked:
+            stop('downstream personal CI cannot reach a corporate upstream: ' + ', '.join(sorted(set(leaked))[:5]))
+
+
 def pre_push(remote, url, lines):
     rules = policy()
     downstream, upstream, destination = identity(rules['downstream_url']), identity(rules['upstream_url']), identity(url)
@@ -269,6 +299,8 @@ def pre_push(remote, url, lines):
                 stop('branch ' + name + ' must be named <type>/<issue>-<kebab-case-title>.')
         if destination == downstream and match:
             check_task(local, match[1])
+        if shared and destination == upstream:
+            check_upstream_branch(local, name, mirrors)
 
 
 # ----- post-merge / post-commit -----
