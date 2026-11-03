@@ -252,6 +252,21 @@ def publishable(commit):
     return entries
 
 
+def check_integrated(source, name):
+    """The downstream PR comes first: the branch change must already be in downstream develop."""
+    develop = 'refs/remotes/downstream/develop'
+    if not git('rev-parse', '-q', '--verify', develop, check=False):
+        stop('fetch downstream first: upstream publication needs downstream/develop.')
+    base = git('merge-base', source, develop)
+    changed = [p for p in git('diff', '--name-only', '-z', base, source).split('\0')
+               if p and not private(p) and not p.startswith(DOWNSTREAM_CI)]
+    branch, integrated = public_tree(source), public_tree(develop)
+    pending = sorted(p for p in changed if branch.get(p) != integrated.get(p))
+    if pending:
+        stop('downstream/' + name + ' is not integrated in downstream develop; merge its downstream PR first'
+             ' (or update the branch from develop). Pending: ' + ', '.join(pending[:8]))
+
+
 def check_upstream_branch(local, name, mirrors):
     """A distinct upstream only receives the public content of the homonymous downstream branch."""
     source = 'refs/remotes/downstream/' + name
@@ -261,6 +276,7 @@ def check_upstream_branch(local, name, mirrors):
     differing = sorted(p for p in set(mine) | set(theirs) if mine.get(p) != theirs.get(p))
     if differing:
         stop('upstream ' + name + ' must carry exactly the public content of downstream/' + name + '; differs in: ' + ', '.join(differing[:8]))
+    check_integrated(source, name)
     if mirrors:
         leaked = [p for p in tree_names(local) if p.startswith(DOWNSTREAM_CI)]
         for commit in git('rev-list', local, '--not', '--remotes=upstream').splitlines():
