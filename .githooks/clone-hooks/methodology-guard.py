@@ -86,30 +86,50 @@ def contract_headings(text):
     return result
 
 
-def documentary_contract(text):
+def contract_kind(text):
+    """Select the schema from its explicit structural markers, not the branch type."""
     headings = contract_headings(text)
-    return ('### Document' in headings or '## Document' in headings
-            or bool(re.search(r'(?:Tipo de contrato|Contract type):\s*documental\b',
-                              text.replace('*', ''), re.IGNORECASE)))
+    if any(title in headings for title in ('## Reglas de redacción y construcción', '## Índice', '## Documento')):
+        return 'documentary'
+    if '## Descripción' in headings or '## Persistencia' in headings:
+        return 'general'
+    if ('### Document' in headings or '## Document' in headings
+            or re.search(r'(?:Tipo de contrato|Contract type):\s*documental\b',
+                         text.replace('*', ''), re.IGNORECASE)):
+        return 'documentary-legacy'
+    return 'coding'
+
+
+def documentary_contract(text):
+    return contract_kind(text).startswith('documentary')
 
 
 def contract_format(text):
-    """Validate the coding contract skeleton without prescribing its contents."""
+    """Validate the selected contract structure without prescribing its content."""
     headings = contract_headings(text)
     if not headings or not headings[0].startswith('# '):
         return 'the contract needs a level-one contribution identity'
-    # Documentary contracts have their own schema, not coding validation cells.
-    if documentary_contract(text):
-        return None
-    expected = ['## Context', '## Diff', '## Test Profiling', '## Persistence',
-                '## Execution plan', '## Results and reporting']
+    kind = contract_kind(text)
     main = [heading for heading in headings if heading.startswith('## ')]
+    if kind == 'documentary-legacy':
+        return None
+    if kind == 'general':
+        if main.count('## Descripción') != 1 or main.count('## Persistencia') != 1:
+            return 'general contracts need one Descripción and one Persistencia block'
+        return None  # Optional blocks and timestamps adapt to the general task.
+    expected = (['## Context', '## Reglas de redacción y construcción', '## Índice', '## Documento']
+                if kind == 'documentary' else
+                ['## Context', '## Diff', '## Test Profiling', '## Persistence',
+                 '## Execution plan', '## Results and reporting'])
     if main != expected:
-        return 'coding contract blocks must be Context, Diff, Test Profiling, Persistence, Execution plan and Results and reporting, in that order'
-    for title in expected:
+        return kind + ' contract blocks must be ' + ', '.join(title[3:] for title in expected) + ', in that order'
+    timed = expected[:3] if kind == 'documentary' else expected
+    for title in timed:
         if not re.search(r'^' + re.escape(title) + r' \(delta_time: \d{2}/\d{2}/\d{4} \d{2}:\d{2}\)$', text, re.MULTILINE):
             return title[3:] + ' needs its own delta_time in DD/MM/YYYY HH:mm format'
-    context = headings[headings.index('## Context') + 1:headings.index('## Diff')]
+    if kind == 'documentary' and not re.search(r'^## Documento\s*$', text, re.MULTILINE):
+        return 'Documento must not have a delta_time; its body is the canonical document'
+    context = headings[headings.index('## Context') + 1:headings.index(expected[1])]
     if context != ['### Descripción', '### Specialized skills']:
         return 'Context needs only the Descripción and Specialized skills subsections'
     return None
@@ -118,7 +138,7 @@ def contract_format(text):
 def contract_validation(text, names, read):
     """Validate declared scripts/cells; empty initial scaffolding remains valid."""
     headings = contract_headings(text)
-    if documentary_contract(text):
+    if contract_kind(text) != 'coding':
         return None
     section = re.search(r'^## Test Profiling(?: \(delta_time:[^)]*\))?\s*\n(.*?)(?=^## |\Z)',
                         text, re.MULTILINE | re.DOTALL)

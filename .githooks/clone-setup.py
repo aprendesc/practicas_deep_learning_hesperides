@@ -85,6 +85,8 @@ def main():
         effective = root / effective
     problems = []
     for f in source.iterdir():
+        if not f.is_file():
+            continue
         installed = effective / f.name
         if not installed.is_file() or installed.read_bytes() != f.read_bytes():
             problems.append('Hook payload missing or outdated: ' + f.name)
