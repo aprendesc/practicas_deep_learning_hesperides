@@ -130,7 +130,11 @@ def contract_format(text):
     if kind == 'documentary' and not re.search(r'^## Documento\s*$', text, re.MULTILINE):
         return 'Documento must not have a delta_time; its body is the canonical document'
     context = headings[headings.index('## Context') + 1:headings.index(expected[1])]
-    if context != ['### Descripción', '### Specialized skills']:
+    required = ['### Descripción', '### Specialized skills']
+    if kind == 'documentary':
+        if not all(context.count(title) == 1 for title in required) or context.index(required[0]) > context.index(required[1]):
+            return 'documentary Context needs Descripción followed by Specialized skills; provenance subsections may follow'
+    elif context != required:
         return 'Context needs only the Descripción and Specialized skills subsections'
     return None
 
