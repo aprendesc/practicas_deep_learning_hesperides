@@ -29,7 +29,7 @@ This repository provides Deep Learning class notebooks and voluntary practice ma
 
 ## Methodologies and references
 
-For code issues, use [coding-contract-guidelines](/Users/alejandroprendes/.codex/skills/coding-contract-guidelines/SKILL.md): `context/issues/<issue>/` holds the Local Contract and issue validation scripts with stable cells. Global functional scenarios live in `context/tests/`. Document and teaching-material issues keep their documentary specifications; they do not acquire fictional application tests. Record implementation needs in pending plan points and preserve completed evidence.
+Choose contracts by the issue's main purpose, not by supporting scripts. Use [coding-contract-guidelines](/Users/alejandroprendes/.codex/skills/coding-contract-guidelines/SKILL.md) for software implementation, [documental-contract-guidelines](/Users/alejandroprendes/.codex/skills/documental-contract-guidelines/SKILL.md) for authored documents, and [general-contract-guidelines](/Users/alejandroprendes/.codex/skills/general-contract-guidelines/SKILL.md) for organization, administration and class preparation, recording, delivery or review without a principal manuscript. Each contract lives in `context/issues/<issue>/`; documentary prose and figures belong inside that issue. Preserve requirements, decisions, pauses and historical evidence. Real supporting validators may stay beside any task without turning it into a software feature. Global functional scenarios remain in `context/tests/`.
 
 [`development-methodology`](/Users/alejandroprendes/.codex/skills/development-methodology/SKILL.md).
 Use the local [sync_lesson_generator](profesor/resources/skills/sync_lesson_generator/SKILL.md) for teaching format, visual models, teacher scripts and validation.
