@@ -1,19 +1,20 @@
-# Private source corpus
-locked/
-
-# Teacher-only solutions
-results/
-
-# Jupyter
-.ipynb_checkpoints/
-
-# Python
+# Material docente privado y entornos locales
+/profesor/
+/professor/
+.venv/
+.editorial/
 __pycache__/
 *.py[cod]
-.venv/
-
-# macOS
+.ipynb_checkpoints/
 .DS_Store
+resultado_local.txt
+calculos_local.py
+# Herramientas de preparación locales: no forman parte de la entrega
+/.github/
+/pyproject.toml
+/uv.lock
 
-# IDEs
+# Configuración local del editor
 .idea/
+.env
+.env.*
