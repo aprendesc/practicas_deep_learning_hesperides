@@ -121,11 +121,13 @@ def contract_format(text):
                 if kind == 'documentary' else
                 ['## Context', '## Diff', '## Test Profiling', '## Persistence',
                  '## Execution plan', '## Results and reporting'])
+    if kind == 'documentary' and '## Diff' in main:
+        expected.insert(1, '## Diff')
     if kind == 'coding' and '## GUI' in main:
         expected.insert(3, '## GUI')
     if main != expected:
         return kind + ' contract blocks must be ' + ', '.join(title[3:] for title in expected) + ', in that order'
-    timed = expected[:3] if kind == 'documentary' else expected
+    timed = expected[:-1] if kind == 'documentary' else expected
     for title in timed:
         if not re.search(r'^' + re.escape(title) + r' \(delta_time: \d{2}/\d{2}/\d{4} \d{2}:\d{2}\)$', text, re.MULTILINE):
             return title[3:] + ' needs its own delta_time in DD/MM/YYYY HH:mm format'
