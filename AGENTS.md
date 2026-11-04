@@ -10,7 +10,7 @@ This repository provides Deep Learning class notebooks and voluntary practice ma
 - **Teacher edition:** the corresponding material with solutions, guidance and narration.
 - **Publication:** explicit release of a student edition, not creation of a private proposal.
 
-## Project map
+## Repository map
 
 - [practicas](practicas/): versioned student distribution, organized as `clases_sincronas/` and `tareas/`.
 - [profesor](profesor/): unversioned teacher editions and preparation resources.
@@ -28,6 +28,8 @@ This repository provides Deep Learning class notebooks and voluntary practice ma
 - Students: users of the teaching materials.
 
 ## Methodologies and references
+
+For code issues, use [coding-contract-guidelines](/Users/alejandroprendes/.codex/skills/coding-contract-guidelines/SKILL.md): `context/issues/<issue>/` holds the Local Contract and issue validation scripts with stable cells. Global functional scenarios live in `context/tests/`. Document and teaching-material issues keep their documentary specifications; they do not acquire fictional application tests. Record implementation needs in pending plan points and preserve completed evidence.
 
 [`development-methodology`](/Users/alejandroprendes/.codex/skills/development-methodology/SKILL.md).
 Use the local [sync_lesson_generator](profesor/resources/skills/sync_lesson_generator/SKILL.md) for teaching format, visual models, teacher scripts and validation.

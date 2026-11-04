@@ -9,6 +9,7 @@ post-merge | post-commit    warn when a merge drops private methodology content 
                             the installed hooks when the versioned baseline changed.
 """
 from collections import Counter
+import ast
 import json
 import os
 from pathlib import Path
@@ -74,13 +75,84 @@ def allowed_on_develop(path, rules, mirrors=False):
     return private(path) or path in rules.get('develop_paths', []) or (mirrors and path.startswith(DOWNSTREAM_CI))
 
 
+def contract_headings(text):
+    """Read real headings, excluding fenced examples and diagrams."""
+    result, fenced = [], False
+    for line in text.splitlines():
+        if re.match(r"^\s*(```|~~~)", line):
+            fenced = not fenced
+        elif not fenced and re.match(r"^#{1,6} ", line):
+            result.append(re.sub(r"\s+\(delta_time:[^)]*\)$", "", line.strip()))
+    return result
+
+
+def documentary_contract(text):
+    headings = contract_headings(text)
+    return ('### Document' in headings or '## Document' in headings
+            or bool(re.search(r'(?:Tipo de contrato|Contract type):\s*documental\b',
+                              text.replace('*', ''), re.IGNORECASE)))
+
+
 def contract_format(text):
-    """Return a problem description, or None when the contract follows the standard layout."""
-    headings = [line.strip() for line in text.splitlines() if line.startswith('## ')]
-    if not headings or headings[0] != '## Execution plan':
-        return 'the contract must start with "## Execution plan"'
-    if '## Context' not in headings or '### Applicable skills' not in text:
-        return 'the contract needs "## Context" and "### Applicable skills"'
+    """Validate the coding contract skeleton without prescribing its contents."""
+    headings = contract_headings(text)
+    if not headings or not headings[0].startswith('# '):
+        return 'the contract needs a level-one contribution identity'
+    # Documentary contracts have their own schema, not coding validation cells.
+    if documentary_contract(text):
+        return None
+    expected = ['## Context', '## Diff', '## Test Profiling', '## Persistence',
+                '## Execution plan', '## Results and reporting']
+    main = [heading for heading in headings if heading.startswith('## ')]
+    if main != expected:
+        return 'coding contract blocks must be Context, Diff, Test Profiling, Persistence, Execution plan and Results and reporting, in that order'
+    for title in expected:
+        if not re.search(r'^' + re.escape(title) + r' \(delta_time: \d{2}/\d{2}/\d{4} \d{2}:\d{2}\)$', text, re.MULTILINE):
+            return title[3:] + ' needs its own delta_time in DD/MM/YYYY HH:mm format'
+    context = headings[headings.index('## Context') + 1:headings.index('## Diff')]
+    if context != ['### Descripción', '### Specialized skills']:
+        return 'Context needs only the Descripción and Specialized skills subsections'
+    return None
+
+
+def contract_validation(text, names, read):
+    """Validate declared scripts/cells; empty initial scaffolding remains valid."""
+    headings = contract_headings(text)
+    if documentary_contract(text):
+        return None
+    section = re.search(r'^## Test Profiling(?: \(delta_time:[^)]*\))?\s*\n(.*?)(?=^## |\Z)',
+                        text, re.MULTILINE | re.DOTALL)
+    if not section or not section[1].strip().strip('-').strip():
+        return None
+    scripts = set()
+    for line in section[1].splitlines():
+        declaration = re.match(r'^(?:Script de (?:test funcional|validación)|Functional test script):',
+                               line.replace('*', '').strip(), re.IGNORECASE)
+        heading = re.match(r'^###\s+.*?_functional_test\.py\s*::', line)
+        if declaration or heading:
+            scripts.update(re.findall(r'context/(?:issues|tests)/[^\s`<>"\)]+_functional_test\.py', line))
+    if not scripts:
+        return 'populated Test Profiling needs an issue or global *_functional_test.py script'
+    registered = set(re.findall(r'#\s*%%\s*\[([^]\n]+)\]', section[1]))
+    available = set()
+    for path in sorted(scripts):
+        if path not in names:
+            return 'declared validation script is missing from the pushed tree: ' + path
+        source = read(path)
+        try:
+            ast.parse(source, filename=path)
+        except SyntaxError as error:
+            return 'validation script is not valid Python: ' + path + ':' + str(error.lineno)
+        cells = re.findall(r'^\s*#\s*%%\s*\[([^]\n]+)\]', source, re.MULTILINE)
+        if not cells or len(cells) != len(set(cells)):
+            return 'validation script needs unique # %% [id] cells: ' + path
+        available.update(cells)
+        for cell in cells:
+            if not re.search(r'#\s*%%\s*\[' + re.escape(cell) + r'\]', section[1]):
+                return 'validation cell [' + cell + '] is not registered in Test Profiling: ' + path
+    stale = registered - available
+    if stale:
+        return 'Test Profiling registers cells absent from its scripts: ' + ', '.join(sorted(stale))
     return None
 
 
@@ -239,11 +311,22 @@ def check_task(local, number, slug_hint=None):
     text, slug, problem = resolve_contract(repo, number, names, read)
     if problem:
         stop(problem)
+    validation_names, validation_read = names, read
+    if not any(path.startswith('context/issues/' + number + '-') for path in names):
+        target = linked_contract(repo, read('AGENTS.md') if 'AGENTS.md' in names else '', number)
+        sibling = target.parents[3]
+        validation_names = {path for path in git('-C', str(sibling), 'ls-tree', '-r', '--name-only', '-z', 'HEAD').split('\0') if path}
+        validation_read = lambda path: git('-C', str(sibling), 'cat-file', 'blob', 'HEAD:' + path)
+        relative = target.relative_to(sibling).as_posix()
+        if relative not in validation_names:
+            stop('linked canonical contract is not committed in its repository: ' + relative)
+        text = validation_read(relative)
     problem = contract_format(text)
     if problem:
         stop(problem)
-    if 'context/project-map.md' not in names:
-        stop('task branches require context/project-map.md.')
+    problem = contract_validation(text, validation_names, validation_read)
+    if problem:
+        stop(problem)
     state = issue_state(slug, number)
     if state != 'OPEN':
         stop('issue ' + slug.split('/', 1)[1] + '#' + number + ' is ' + state.lower() + '; task branches need an open issue.')

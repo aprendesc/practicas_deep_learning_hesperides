@@ -17,7 +17,8 @@ from urllib.parse import urlsplit
 ROOTS = {'context', '.githooks', '.worktreelink', '.agents', '.codex', '.claude', 'skills'}
 NAMES = {'AGENTS.md', 'CLAUDE.md', 'OPENCODE.md', 'SKILL.md', 'opencode.json', 'opencode.jsonc'}
 SCRIPTS = {'scripts/promote-to-upstream', 'scripts/prepare-upstream-branch'}
-TRACE = re.compile(r'(?i)(\bcontext\b|\bagents\.md\b|\bclaude\b|\bcodex\b|\bopencode\b|\bskills?\b|\bgithooks\b|\bworktreelink\b|promote-to-upstream|prepare-upstream-branch|\.github/agents)')
+CATALOGS = {'docs/harness-inventory.md', 'docs/skills-inventory.md'}
+TRACE = re.compile(r'(?i)(\bcontext\b|\bagents\.md\b|\bclaude\b|\bcodex\b|\bopencode\b|\bskills?\b|\bgithooks\b|\bworktreelink\b|promote-to-upstream|prepare-upstream-branch|docs/(?:harness|skills)-inventory\.md|\.github/agents)')
 
 
 def git(*args, env=None, data=None):
@@ -37,9 +38,21 @@ def identity(url):
     return re.sub(r'^github\.com-.*$', 'github.com', host.lower()) + '/' + path.strip('/').removesuffix('.git').lower()
 
 
+def recovery_metadata(name):
+    """Recognized private methodology metadata in the two live recovery collections."""
+    parts = name.split('/')
+    if parts[0] not in {'codex', 'claude-code'}:
+        return False
+    if parts[1:] == ['PROJECTS.md']:
+        return True
+    if len(parts) < 4 or parts[1] != 'skills' or not re.fullmatch(r'[a-z0-9][a-z0-9-]*', parts[2]):
+        return False
+    return name.endswith('.md') or parts[3:] == ['agents', 'openai.yaml']
+
+
 def private(name):
     parts = name.split('/')
-    return (parts[0] in ROOTS or any(part in NAMES for part in parts)
+    return (name in CATALOGS or recovery_metadata(name) or parts[0] in ROOTS or any(part in NAMES for part in parts)
             or name in SCRIPTS or name.startswith(('.github/skills/', '.github/agents/')))
 
 
