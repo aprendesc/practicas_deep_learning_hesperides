@@ -17,7 +17,7 @@ from urllib.parse import urlsplit
 ROOTS = {'context', '.githooks', '.worktreelink', '.agents', '.codex', '.claude', 'skills'}
 NAMES = {'AGENTS.md', 'CLAUDE.md', 'OPENCODE.md', 'SKILL.md', 'opencode.json', 'opencode.jsonc'}
 SCRIPTS = {'scripts/promote-to-upstream', 'scripts/prepare-upstream-branch'}
-CATALOGS = {'docs/harness-inventory.md', 'docs/skills-inventory.md'}
+CATALOGS = {'docs/harness-inventory.md', 'docs/skills-inventory.md', 'docs/global-summary.md'}
 TRACE = re.compile(r'(?i)(\bcontext\b|\bagents\.md\b|\bclaude\b|\bcodex\b|\bopencode\b|\bskills?\b|\bgithooks\b|\bworktreelink\b|promote-to-upstream|prepare-upstream-branch|docs/(?:harness|skills)-inventory\.md|\.github/agents)')
 
 
@@ -122,16 +122,57 @@ def prepare(source, target):
         print(json.dumps(dict(branch=branch, commit=commit, target=target, pushed=False)))
 
 
+def prepare_mapped(source, base, target):
+    """Snapshot a mapped issue branch without importing its private ancestry."""
+    downstream = identity(git('remote', 'get-url', '--push', 'downstream').decode().strip())
+    upstream = identity(git('remote', 'get-url', 'upstream').decode().strip())
+    if downstream != upstream or base not in {'main', 'master'}:
+        raise RuntimeError('Mapped publication requires a shared destination and main/master base')
+    expected = 'publish/' + source.removeprefix('refs/remotes/downstream/')
+    if not source.startswith('refs/remotes/downstream/') or target != expected:
+        raise RuntimeError('Publication target must be publish/<downstream issue branch>')
+    if not re.fullmatch(r'publish/[a-z][a-z0-9-]*/[1-9]\d*-[a-z0-9]+(?:-[a-z0-9]+)*', target):
+        raise RuntimeError('Invalid mapped issue branch')
+    branch = 'refs/heads/' + target
+    if subprocess.run(['git', 'show-ref', '--verify', '--quiet', branch]).returncode == 0:
+        raise RuntimeError('Publication branch already exists; preserve it')
+    destination = git('rev-parse', '--verify', 'refs/remotes/upstream/' + base + '^{commit}').decode().strip()
+    source_oid = git('rev-parse', '--verify', source + '^{commit}').decode().strip()
+    with tempfile.TemporaryDirectory(prefix='mapped-publication-') as directory:
+        env = dict(os.environ, GIT_INDEX_FILE=str(Path(directory) / 'index'))
+        git('read-tree', source_oid, env=env)
+        removed = []
+        for mode, kind, oid, name in entries(source_oid):
+            if private(name):
+                removed.append(name.encode('utf-8', 'surrogateescape') + b'\0')
+            elif Path(name).name == '.gitignore' and kind == 'blob':
+                if mode == '120000':
+                    raise RuntimeError('Cannot filter symlinked .gitignore')
+                blob = git('hash-object', '-w', '--stdin', data=clean_ignore(git('cat-file', 'blob', oid))).decode().strip()
+                git('update-index', '--cacheinfo', mode, blob, name, env=env)
+        if removed:
+            git('update-index', '--force-remove', '-z', '--stdin', env=env, data=b''.join(removed))
+        tree = git('write-tree', env=env).decode().strip()
+        validate_tree(tree)
+        commit = git('commit-tree', tree, '-p', destination,
+                     data=('chore: prepare filtered publication of ' + source.split('downstream/', 1)[1] + '\n').encode()).decode().strip()
+        git('update-ref', branch, commit, '0' * len(commit))
+        print(json.dumps(dict(branch=branch, commit=commit, source=source_oid, base=destination, pushed=False)))
+
+
 def check(url):
     policy_path = Path(__file__).with_name('clone-policy.json')
     if not policy_path.exists():
         policy_path = Path(__file__).parents[1] / 'clone-setup.json'
     policy = json.loads(policy_path.read_text())
-    if identity(url) == identity(policy['downstream_url']):
-        return
+    same_destination = identity(policy['upstream_url']) == identity(policy['downstream_url'])
+    downstream_destination = identity(url) == identity(policy['downstream_url'])
     for line in sys.stdin:
         local_ref, new, remote_ref, old = line.split()
         if set(new) == {'0'}:
+            continue
+        publication_ref = remote_ref.startswith('refs/heads/publish/') or remote_ref in {'refs/heads/main', 'refs/heads/master'}
+        if downstream_destination and not (same_destination and publication_ref):
             continue
         validate_tree(new)
         args = ('rev-list', new, '^' + old) if set(old) != {'0'} else ('rev-list', new, '--not', '--remotes=upstream')
@@ -143,6 +184,8 @@ def main():
     try:
         if len(sys.argv) == 4 and sys.argv[1] == 'prepare':
             prepare(sys.argv[2], sys.argv[3])
+        elif len(sys.argv) == 5 and sys.argv[1] == 'prepare-mapped':
+            prepare_mapped(sys.argv[2], sys.argv[3], sys.argv[4])
         elif len(sys.argv) == 4 and sys.argv[1] == 'check':
             check(sys.argv[3])
         else:

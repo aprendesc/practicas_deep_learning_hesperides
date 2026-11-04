@@ -5,3 +5,7 @@ python3 -B "$hook_dir/methodology-guard.py" post-merge || true
 if git config --get filter.lfs.clean >/dev/null 2>&1; then
     git lfs post-merge "$@"
 fi
+
+python3 -B "$hook_dir/post-merge-tests.py" || {
+    echo "Functional validation failed after merge; inspect its local report. The merge is already applied." >&2
+}

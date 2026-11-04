@@ -121,6 +121,8 @@ def contract_format(text):
                 if kind == 'documentary' else
                 ['## Context', '## Diff', '## Test Profiling', '## Persistence',
                  '## Execution plan', '## Results and reporting'])
+    if kind == 'coding' and '## GUI' in main:
+        expected.insert(3, '## GUI')
     if main != expected:
         return kind + ' contract blocks must be ' + ', '.join(title[3:] for title in expected) + ', in that order'
     timed = expected[:3] if kind == 'documentary' else expected
@@ -438,6 +440,10 @@ def check_upstream_branch(local, name, mirrors):
     if not git('rev-parse', '-q', '--verify', source, check=False):
         stop('upstream branch ' + name + ' needs the homonymous downstream branch; push it to downstream and fetch first.')
     mine, theirs = publishable(local), publishable(source)
+    if not mirrors and owner(identity(policy()['upstream_url'])) in PERSONAL_OWNERS:
+        develop = 'refs/remotes/downstream/develop'
+        if known(develop) and mine == publishable(develop):
+            return  # An initialized personal IU may reference the published develop baseline.
     differing = sorted(p for p in set(mine) | set(theirs) if mine.get(p) != theirs.get(p))
     if differing:
         stop('upstream ' + name + ' must carry exactly the public content of downstream/' + name + '; differs in: ' + ', '.join(differing[:8]))
@@ -474,6 +480,22 @@ def pre_push(remote, url, lines):
                 check_develop(local, None if zero(previous) else previous, rules, mirrors)
             continue
         if zero(local):
+            continue
+        if name == 'publish/develop' and destination == upstream and owner(upstream) in PERSONAL_OWNERS:
+            source = 'refs/remotes/downstream/develop'
+            if not known(source) or publishable(local) != publishable(source):
+                stop('personal baseline publication must equal filtered downstream/develop.')
+            continue
+        if not shared and destination == downstream and name.startswith('publish/'):
+            source_name = name.removeprefix('publish/')
+            if not TASK.fullmatch(source_name):
+                stop('publication branch must be publish/<type>/<issue>-<title>.')
+            source = 'refs/remotes/downstream/' + source_name
+            develop = 'refs/remotes/downstream/develop'
+            if not known(source) or (publishable(local) != publishable(source) and
+                                     (not known(develop) or publishable(local) != publishable(develop))):
+                stop('publication must equal filtered downstream issue content or the initialized develop baseline.')
+            # Contracts remain on the source branch; publication contains no private metadata.
             continue
         match = TASK.fullmatch(name)
         if destination == downstream or (destination == upstream and owner(upstream) in PERSONAL_OWNERS):
